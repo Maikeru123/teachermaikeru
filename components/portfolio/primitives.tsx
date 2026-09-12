@@ -11,6 +11,13 @@ const socialIcons: Record<SocialName, LucideIcon> = {
   GitHub: GitBranch,
 }
 
+const socialLinks: Record<SocialName, string> = {
+  Instagram: "https://www.instagram.com/mikonotdumpreal/",
+  LinkedIn: "https://www.linkedin.com/in/michael-velez-09b7ab370/",
+  Email: "mailto:michaelvelez112301@gmail.com",
+  GitHub: "https://github.com/Maikeru123",
+}
+
 export function Availability() {
   return (
     <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-medium text-zinc-950 shadow-[0_6px_18px_rgba(0,0,0,0.08)] dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-[0_6px_18px_rgba(0,0,0,0.3)]">
@@ -31,11 +38,14 @@ export function ArrowButton({ children }: { children: ReactNode }) {
 
 export function SocialPill({ name }: { name: SocialName }) {
   const Icon = socialIcons[name]
+  const href = socialLinks[name]
+  const isExternal = name !== "Email"
 
   return (
     <a
-      href="#certificates"
+      href={href}
       aria-label={name}
+      {...(isExternal ? { target: "_blank", rel: "noreferrer" } : {})}
       className="inline-flex min-w-[118px] items-center justify-center gap-1.5 whitespace-nowrap rounded-full border border-zinc-200 bg-white px-3.5 py-2 text-[11px] font-medium text-zinc-950 transition-all hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-sm dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:border-zinc-500"
     >
       <Icon className="size-3" strokeWidth={1.7} />
