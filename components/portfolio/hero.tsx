@@ -34,7 +34,7 @@ export function Hero() {
         <a href="#work" className="group mt-3 inline-block"><ArrowButton>View projects</ArrowButton></a>
       </div>
 
-      <div className="hero-socials absolute bottom-7 left-6 z-20 flex max-w-[calc(100%-3rem)] flex-wrap justify-start gap-2 sm:bottom-auto sm:left-auto sm:right-[4.5%] sm:top-[96px] sm:flex-nowrap sm:justify-end">
+      <div className="hero-socials absolute bottom-7 left-4 z-20 flex max-w-[170px] flex-wrap justify-start gap-2 sm:bottom-auto sm:left-auto sm:right-[4.5%] sm:top-[96px] sm:max-w-[calc(100%-3rem)] sm:flex-nowrap sm:justify-end">
         <SocialPill name="Instagram" />
         <SocialPill name="LinkedIn" />
         <SocialPill name="Email" />
