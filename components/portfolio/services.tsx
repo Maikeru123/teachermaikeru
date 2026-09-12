@@ -32,22 +32,6 @@ const teachingAreas = [
   ["DATABASE DEVELOPMENT", "Teaching database design, SQL, data management, relationships, and database-driven applications.", "◫"],
 ] as const
 
-function PhonePreview() {
-  return (
-    <div className="absolute right-[18%] top-1/2 hidden h-[116px] w-[158px] -translate-y-1/2 rotate-[9deg] rounded-sm bg-white p-2 shadow-[0_12px_26px_rgba(0,0,0,0.25)] sm:flex sm:gap-1.5">
-      {["Dashboard", "Analytics", "Stories"].map((name, index) => (
-        <div className="relative flex-1 overflow-hidden rounded-[10px] border border-zinc-200 bg-zinc-50" key={name}>
-          <div className="mx-auto mt-1 h-1 w-5 rounded-full bg-zinc-800" />
-          <p className="mt-3 px-1 text-[4px] text-zinc-800">{name}</p>
-          <div className={`mx-1 mt-2 h-6 rounded ${index === 2 ? "bg-rose-300" : "bg-sky-200"}`} />
-          <div className="mx-1 mt-1.5 h-1 rounded bg-zinc-200" /><div className="mx-1 mt-1 h-1 rounded bg-zinc-200" />
-          <div className="absolute inset-x-1 bottom-2 h-5 rounded bg-white shadow-sm" />
-        </div>
-      ))}
-    </div>
-  )
-}
-
 export function Services() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
 
@@ -87,12 +71,11 @@ export function Services() {
               </button>
               <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                 <div className="min-h-0 overflow-hidden bg-zinc-800 text-white">
-                  <div className="relative px-3 pb-7 sm:px-5 sm:pb-8">
+                  <div className="px-3 pb-7 sm:px-5 sm:pb-8">
                     <p className="max-w-[500px] text-[13px] leading-relaxed text-zinc-300 sm:text-[14px]">{strength.description}</p>
                     <div className="mt-5 flex max-w-[580px] flex-wrap gap-2">
                       {strength.skills.map((skill) => <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[11px] text-zinc-100 sm:text-[12px]" key={skill}>{skill}</span>)}
                     </div>
-                    {index === 0 && <PhonePreview />}
                   </div>
                 </div>
               </div>
