@@ -1,19 +1,29 @@
-import { Button } from "@/components/ui/button"
+import { BackToTop } from "@/components/portfolio/back-to-top"
+import { Certificates } from "@/components/portfolio/certificates"
+import { Education } from "@/components/portfolio/education"
+import { Experience } from "@/components/portfolio/experience"
+import { Hero } from "@/components/portfolio/hero"
+import { Navigation } from "@/components/portfolio/navigation"
+import { Projects } from "@/components/portfolio/projects"
+import { ScrollReveal } from "@/components/portfolio/scroll-reveal"
+import { Services } from "@/components/portfolio/services"
 
 export default function Page() {
   return (
-    <div className="flex min-h-svh p-6">
-      <div className="flex max-w-md min-w-0 flex-col gap-4 text-sm leading-loose">
-        <div>
-          <h1 className="font-medium">Project ready!</h1>
-          <p>You may now add components and start building.</p>
-          <p>We&apos;ve already added the button component for you.</p>
-          <Button className="mt-2">Button</Button>
+    <>
+      <a href="#main-content" className="sr-only fixed left-4 top-4 z-[70] rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white focus:not-sr-only dark:bg-zinc-100 dark:text-zinc-950">Skip to content</a>
+      <Navigation />
+      <main id="main-content" className="cloud-page">
+        <div className="page-shell mx-auto w-full overflow-hidden border border-white/70 shadow-[0_17px_46px_rgba(0,0,0,0.14)]">
+          <ScrollReveal><Hero /></ScrollReveal>
+          <ScrollReveal delay={80}><Projects /></ScrollReveal>
+          <ScrollReveal delay={80}><Services /></ScrollReveal>
+          <ScrollReveal delay={80}><Experience /></ScrollReveal>
+          <ScrollReveal delay={80}><Education /></ScrollReveal>
+          <ScrollReveal delay={80}><Certificates /></ScrollReveal>
         </div>
-        <div className="font-mono text-xs text-muted-foreground">
-          (Press <kbd>d</kbd> to toggle dark mode)
-        </div>
-      </div>
-    </div>
+      </main>
+      <BackToTop />
+    </>
   )
 }
