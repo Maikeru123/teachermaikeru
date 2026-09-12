@@ -24,9 +24,8 @@ export function Hero() {
           fill
           preload
           sizes="(max-width: 640px) 100vw, 530px"
-          className="translate-y-[66px] scale-[0.95] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)] sm:translate-y-[130px] dark:drop-shadow-[0_0_24px_rgba(161,161,170,0.14)]"
+          className="translate-y-[78px] scale-[0.95] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)] sm:translate-y-[115px] sm:scale-[0.99] lg:translate-y-[130px] dark:drop-shadow-[0_0_24px_rgba(161,161,170,0.14)]"
         />
-        <div className="absolute inset-x-0 bottom-0 h-14 bg-white dark:bg-zinc-950" />
       </div>
 
       <div className="hero-intro absolute left-6 top-[195px] z-20 max-w-[235px] sm:bottom-[65px] sm:left-[8%] sm:top-auto sm:max-w-[320px]">
