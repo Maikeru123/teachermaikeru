@@ -6,6 +6,10 @@ import { ArrowButton, SocialPill } from "./primitives"
 export function Hero() {
   return (
     <section className="section-frame relative isolate min-h-[650px] overflow-hidden bg-white sm:min-h-[680px] lg:min-h-[704px] dark:bg-zinc-950">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-12 bottom-[-25px] z-0 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle_at_center,rgba(212,212,216,0.68)_0%,rgba(228,228,231,0.34)_46%,transparent_72%)] dark:bg-[radial-gradient(circle_at_center,rgba(63,63,70,0.3)_0%,rgba(39,39,42,0.16)_46%,transparent_72%)] sm:inset-x-0 sm:bottom-[-55px] sm:mx-auto sm:h-[560px] sm:w-[560px] lg:h-[590px] lg:w-[590px]"
+      />
       <div className="pointer-events-none absolute inset-x-6 top-[110px] z-0 flex justify-center overflow-hidden sm:top-[160px]">
         <h1 className="hero-wordmark whitespace-nowrap text-[clamp(2.75rem,8.45vw,8.1rem)] font-medium leading-none tracking-[-0.09em] text-zinc-950 dark:text-zinc-100">
           <span className="font-light text-transparent [-webkit-text-stroke:1.5px_#18181b] sm:[-webkit-text-stroke:2px_#18181b] dark:[-webkit-text-stroke:1.5px_#f4f4f5] sm:dark:[-webkit-text-stroke:2px_#f4f4f5]">MICHAEL</span>{" "}
@@ -20,7 +24,7 @@ export function Hero() {
           fill
           preload
           sizes="(max-width: 640px) 100vw, 530px"
-          className="translate-y-[58px] scale-[0.95] object-contain object-top sm:translate-y-[115px]"
+          className="translate-y-[66px] scale-[0.95] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)] sm:translate-y-[130px] dark:drop-shadow-[0_0_24px_rgba(161,161,170,0.14)]"
         />
         <div className="absolute inset-x-0 bottom-0 h-14 bg-white dark:bg-zinc-950" />
       </div>

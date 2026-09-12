@@ -32,6 +32,24 @@ const teachingAreas = [
   ["DATABASE DEVELOPMENT", "Teaching database design, SQL, data management, relationships, and database-driven applications.", "◫"],
 ] as const
 
+const teachingAreaDetails = {
+  "WEB DEVELOPMENT": {
+    subtitle: "Frontend & Web Technologies",
+    cardClass: "border-zinc-300 bg-white/80 dark:border-zinc-700 dark:bg-zinc-800",
+    iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
+  },
+  "MOBILE DEVELOPMENT": {
+    subtitle: "Cross-Platform Applications",
+    cardClass: "border-zinc-300/90 bg-zinc-50/80 dark:border-zinc-700 dark:bg-zinc-800/90",
+    iconClass: "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-950",
+  },
+  "DATABASE DEVELOPMENT": {
+    subtitle: "Data Design & Management",
+    cardClass: "border-zinc-400/80 bg-zinc-100/65 dark:border-zinc-600 dark:bg-zinc-800/75",
+    iconClass: "bg-zinc-900 text-white dark:bg-zinc-300 dark:text-zinc-950",
+  },
+} as const
+
 export function Services() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
 
@@ -42,15 +60,20 @@ export function Services() {
         <p>I am an IT educator at the University of Mindanao with a strong interest in software development and technology education. I primarily teach web development, mobile application development, and database-related subjects.</p>
         <p>As an educator, I help students understand programming concepts and how they are applied in real-world software development. Alongside teaching, I continue to build and explore web, mobile, and database-driven applications to strengthen my technical skills and bring practical experience into the classroom.</p>
       </div>
-      <h3 className="mt-9 text-[clamp(1.45rem,2.5vw,2rem)] font-medium tracking-[-0.06em]">TEACHING AREAS</h3>
+      <h3 className="mt-9 text-[clamp(1.55rem,2.6vw,2.1rem)] font-semibold tracking-[-0.06em]">TEACHING AREAS</h3>
       <div className="mt-5 grid gap-3 md:grid-cols-3">
-        {teachingAreas.map(([title, description, icon]) => (
-          <article className="rounded-sm border border-zinc-300 bg-white/75 p-5 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:border-zinc-700 dark:bg-zinc-800 dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)]" key={title}>
-            <span className="inline-flex size-9 items-center justify-center rounded-full bg-zinc-950 text-[14px] font-semibold text-white dark:bg-zinc-100 dark:text-zinc-950">{icon}</span>
-            <h3 className="mt-5 text-[18px] font-medium tracking-[-0.04em]">{title}</h3>
-            <p className="mt-2 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
-          </article>
-        ))}
+        {teachingAreas.map(([title, description, icon]) => {
+          const details = teachingAreaDetails[title]
+
+          return (
+            <article className={`rounded-sm border p-5 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)] ${details.cardClass}`} key={title}>
+              <span className={`inline-flex size-9 items-center justify-center rounded-full text-[14px] font-semibold ${details.iconClass}`}>{icon}</span>
+              <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.04em]">{title}</h3>
+              <p className="mt-1 text-[11px] font-medium italic tracking-[0.01em] text-zinc-500 dark:text-zinc-400">{details.subtitle}</p>
+              <p className="mt-3 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
+            </article>
+          )
+        })}
       </div>
       <h3 className="mt-12 text-[clamp(1.45rem,2.5vw,2rem)] font-medium tracking-[-0.06em]">TECHNICAL SKILLS</h3>
       <p className="mt-2 text-[13px] text-zinc-600 dark:text-zinc-400">Select an area to view the technologies and knowledge I use.</p>
