@@ -14,7 +14,7 @@ export default function Page() {
       <a href="#main-content" className="sr-only fixed left-4 top-4 z-[70] rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white focus:not-sr-only dark:bg-zinc-100 dark:text-zinc-950">Skip to content</a>
       <Navigation />
       <main id="main-content" className="cloud-page">
-        <div className="page-shell mx-auto w-full overflow-hidden border border-white/70 shadow-[0_17px_46px_rgba(0,0,0,0.14)]">
+        <div className="page-shell mx-auto w-full overflow-hidden border border-border shadow-[0_17px_46px_rgba(0,0,0,0.14)]">
           <ScrollReveal><Hero /></ScrollReveal>
           <ScrollReveal delay={80}><Projects /></ScrollReveal>
           <ScrollReveal delay={80}><Services /></ScrollReveal>

@@ -1,11 +1,22 @@
+"use client"
+
 import Image from "next/image"
-import portrait from "../../public/pic1.png"
+import { useTheme } from "next-themes"
+import { useSyncExternalStore } from "react"
 
 import { ArrowButton, SocialPill } from "./primitives"
 
 export function Hero() {
+  const mounted = useSyncExternalStore(
+    () => () => undefined,
+    () => true,
+    () => false,
+  )
+  const { resolvedTheme } = useTheme()
+  const imageSrc = mounted && resolvedTheme === "dark" ? "/pic2white.png" : "/pic1.png"
+
   return (
-    <section className="section-frame relative isolate min-h-[650px] overflow-hidden bg-white sm:min-h-[680px] lg:min-h-[704px] dark:bg-zinc-950">
+    <section className="section-frame relative isolate min-h-[650px] overflow-hidden bg-background sm:min-h-[680px] lg:min-h-[704px]">
       <div
         aria-hidden="true"
         className="pointer-events-none absolute -right-12 bottom-[-25px] z-0 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle_at_center,rgba(212,212,216,0.68)_0%,rgba(228,228,231,0.34)_46%,transparent_72%)] dark:bg-[radial-gradient(circle_at_center,rgba(63,63,70,0.3)_0%,rgba(39,39,42,0.16)_46%,transparent_72%)] sm:inset-x-0 sm:bottom-[-55px] sm:mx-auto sm:h-[560px] sm:w-[560px] lg:h-[590px] lg:w-[590px]"
@@ -19,7 +30,7 @@ export function Hero() {
 
       <div className="hero-portrait absolute -right-10 bottom-0 z-10 h-[300px] w-[300px] max-w-none sm:inset-x-0 sm:mx-auto sm:h-[475px] sm:w-auto sm:max-w-[530px] lg:h-[510px]">
         <Image
-          src={portrait}
+          src={imageSrc}
           alt="Michael Velez"
           fill
           preload

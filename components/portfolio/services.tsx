@@ -35,17 +35,17 @@ const teachingAreas = [
 const teachingAreaDetails = {
   "WEB DEVELOPMENT": {
     subtitle: "Frontend & Web Technologies",
-    cardClass: "border-zinc-300 bg-white/80 dark:border-zinc-700 dark:bg-zinc-800",
+    cardClass: "border-border bg-card",
     iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
   },
   "MOBILE DEVELOPMENT": {
     subtitle: "Cross-Platform Applications",
-    cardClass: "border-zinc-300/90 bg-zinc-50/80 dark:border-zinc-700 dark:bg-zinc-800/90",
+    cardClass: "border-border bg-card",
     iconClass: "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-950",
   },
   "DATABASE DEVELOPMENT": {
     subtitle: "Data Design & Management",
-    cardClass: "border-zinc-400/80 bg-zinc-100/65 dark:border-zinc-600 dark:bg-zinc-800/75",
+    cardClass: "border-border bg-card",
     iconClass: "bg-zinc-900 text-white dark:bg-zinc-300 dark:text-zinc-950",
   },
 } as const
@@ -85,7 +85,7 @@ export function Services() {
             <article className={`overflow-hidden border-b border-zinc-400 dark:border-zinc-700 ${isOpen ? "border-b-0" : ""}`} key={strength.title}>
               <button
                 type="button"
-                className={`group flex w-full items-center justify-between px-3 text-left transition-colors duration-300 sm:px-5 ${isOpen ? "bg-zinc-800 py-6 text-white sm:py-7 dark:bg-zinc-800" : "py-5 hover:bg-white/45 sm:py-5.5 dark:hover:bg-zinc-800/60"}`}
+                className={`group flex w-full items-center justify-between px-3 text-left transition-colors duration-300 sm:px-5 ${isOpen ? "bg-zinc-800 py-6 text-white sm:py-7" : "py-5 hover:bg-secondary sm:py-5.5"}`}
                 aria-expanded={isOpen}
                 onClick={() => setActiveIndex(isOpen ? null : index)}
               >

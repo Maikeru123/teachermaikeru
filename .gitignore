@@ -20,6 +20,12 @@
 
 # misc
 .DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.swp
+*.swo
+*.tmp
 *.pem
 
 # debug

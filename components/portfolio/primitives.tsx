@@ -20,7 +20,7 @@ const socialLinks: Record<SocialName, string> = {
 
 export function Availability() {
   return (
-    <span className="inline-flex items-center gap-1.5 rounded-full bg-white px-3 py-1.5 text-[11px] font-medium text-zinc-950 shadow-[0_6px_18px_rgba(0,0,0,0.08)] dark:bg-zinc-800 dark:text-zinc-100 dark:shadow-[0_6px_18px_rgba(0,0,0,0.3)]">
+    <span className="inline-flex items-center gap-1.5 rounded-full bg-card px-3 py-1.5 text-[11px] font-medium text-zinc-950 shadow-[0_6px_18px_rgba(0,0,0,0.08)] dark:text-zinc-100 dark:shadow-[0_6px_18px_rgba(0,0,0,0.3)]">
       <span className="size-1.5 rounded-full bg-emerald-500 shadow-[0_0_0_2px_rgba(16,185,129,0.13)]" />
       IT Educator · University of Mindanao
     </span>
@@ -45,7 +45,7 @@ export function SocialPill({ name }: { name: SocialName }) {
       aria-label={name}
       target="_blank"
       rel="noreferrer"
-      className="inline-flex min-w-[72px] items-center justify-center gap-1 whitespace-nowrap rounded-full border border-zinc-200 bg-white px-1.5 py-2 text-[10px] font-medium text-zinc-950 transition-all hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-sm sm:min-w-[118px] sm:gap-1.5 sm:px-3.5 sm:text-[11px] dark:border-zinc-700 dark:bg-zinc-800 dark:text-zinc-100 dark:hover:border-zinc-500"
+      className="inline-flex min-w-[72px] items-center justify-center gap-1 whitespace-nowrap rounded-full border border-border bg-card px-1.5 py-2 text-[10px] font-medium text-zinc-950 transition-all hover:-translate-y-0.5 hover:border-zinc-400 hover:shadow-sm sm:min-w-[118px] sm:gap-1.5 sm:px-3.5 sm:text-[11px] dark:text-zinc-100 dark:hover:border-zinc-500"
     >
       <Icon className="size-3" strokeWidth={1.7} />
       {name}

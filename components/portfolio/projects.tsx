@@ -65,7 +65,7 @@ export function Projects() {
   }
 
   return (
-    <section id="work" className="section-frame bg-white px-6 py-12 sm:px-12 sm:py-14 lg:px-[11.5%] dark:bg-zinc-900" aria-labelledby="work-heading">
+    <section id="work" className="section-frame bg-background px-6 py-12 sm:px-12 sm:py-14 lg:px-[11.5%]" aria-labelledby="work-heading">
       <div className="text-center">
         <h2 id="work-heading" className="inline-block border-b-2 border-zinc-950 pb-2 text-[clamp(2rem,4vw,3.25rem)] font-semibold tracking-[-0.07em] dark:border-zinc-100">SELECTED WORK</h2>
       </div>
