@@ -13,7 +13,7 @@ const projects = [
 function ProjectPreview({ project }: { project: (typeof projects)[number] }) {
   return (
     <div className="relative aspect-[1.15] overflow-hidden bg-zinc-100 dark:bg-zinc-800">
-      <Image src={project.image} alt={`${project.title} project preview`} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-contain transition-transform duration-500 group-hover:scale-[1.015]" />
+      <Image src={project.image} alt={`${project.title} project preview`} fill sizes="(max-width: 640px) 100vw, 50vw" className="object-cover object-center transition-transform duration-500 group-hover:scale-[1.015]" />
     </div>
   )
 }
@@ -67,7 +67,7 @@ export function Projects() {
   return (
     <section id="work" className="section-frame bg-background px-6 py-12 sm:px-12 sm:py-14 lg:px-[11.5%]" aria-labelledby="work-heading">
       <div className="text-center">
-        <h2 id="work-heading" className="inline-block border-b-2 border-zinc-950 pb-2 text-[clamp(2rem,4vw,3.25rem)] font-semibold tracking-[-0.07em] dark:border-zinc-100">SELECTED WORK</h2>
+        <h2 id="work-heading" className="inline-block border-b-2 border-zinc-950 pb-2 text-[32px] font-semibold tracking-[-0.05em] sm:text-5xl dark:border-zinc-100">SELECTED WORK</h2>
       </div>
       <div className="mt-8 flex items-center justify-between text-[12px] font-medium">
         <div className="flex gap-5"><button>All</button><button className="text-zinc-500 dark:text-zinc-400">Real Project</button><button className="text-zinc-500 dark:text-zinc-400">Exploration</button></div>
@@ -93,9 +93,9 @@ export function Projects() {
             <article className="group grid w-full shrink-0 gap-6 sm:grid-cols-[minmax(0,1.25fr)_minmax(240px,0.75fr)] sm:items-center" key={`${project.title}-${carouselIndex}`}>
               <div className="overflow-hidden bg-zinc-100 shadow-[0_12px_20px_rgba(0,0,0,0.03)] dark:bg-zinc-800 dark:shadow-[0_12px_20px_rgba(0,0,0,0.25)]"><ProjectPreview project={project} /></div>
               <div className="pr-2 sm:pr-8">
-                <h3 className="max-w-[410px] text-[clamp(1.45rem,3vw,2.35rem)] font-medium leading-snug tracking-[-0.05em]">{project.title}</h3>
-                <p className="mt-4 text-[13px] font-medium text-zinc-700 dark:text-zinc-200">{project.role}</p>
-                <p className="mt-2 max-w-[460px] text-[13px] leading-relaxed text-zinc-500 dark:text-zinc-400">{project.description}</p>
+                <h3 className="max-w-[410px] text-2xl font-medium leading-snug tracking-[-0.04em]">{project.title}</h3>
+                <p className="mt-4 text-sm font-medium text-zinc-700 dark:text-zinc-200">{project.role}</p>
+                <p className="mt-2 max-w-[460px] text-sm leading-relaxed text-zinc-500 dark:text-zinc-400 sm:text-base">{project.description}</p>
                 <div className="mt-4 flex flex-wrap gap-1.5">{project.tags.map((tag) => <span className="rounded-full border border-zinc-200 px-3 py-1.5 text-[11px] dark:border-zinc-700 dark:bg-zinc-800" key={tag}>{tag}</span>)}</div>
                 <div className="mt-7 flex items-center gap-2" aria-label="Project slide selection">
                   {projects.map((item, index) => <button type="button" aria-label={`Show ${item.title}`} className={`h-1.5 rounded-full transition-all ${activeIndex === index ? "w-8 bg-zinc-950 dark:bg-zinc-100" : "w-3 bg-zinc-300 hover:bg-zinc-500 dark:bg-zinc-700 dark:hover:bg-zinc-400"}`} disabled={isAnimating} key={item.title} onClick={() => selectProject(index)} />)}

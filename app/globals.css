@@ -5,8 +5,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-    --font-heading: var(--font-sans);
-    --font-sans: var(--font-sans);
+    --font-heading: var(--font-poppins);
+    --font-sans: var(--font-poppins);
     --color-sidebar-ring: var(--sidebar-ring);
     --color-sidebar-border: var(--sidebar-border);
     --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
@@ -48,7 +48,6 @@
 }
 
 :root {
-    --font-sans: Arial, Helvetica, sans-serif;
     --font-mono: "SFMono-Regular", Consolas, "Liberation Mono", monospace;
     --background: #f1f1f1;
     --foreground: #010101;
@@ -123,7 +122,7 @@
     @apply border-border outline-ring/50;
     }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background text-base text-foreground;
     }
   html {
     @apply font-sans;
@@ -165,6 +164,95 @@ body { min-width: 320px; }
 .hero-portrait { animation: content-build 800ms 240ms cubic-bezier(.22, 1, .36, 1) both; }
 .hero-intro { animation: content-build 560ms 560ms cubic-bezier(.22, 1, .36, 1) both; }
 .hero-socials { animation: content-build 560ms 680ms cubic-bezier(.22, 1, .36, 1) both; }
+
+.hero-tech-showcase {
+  position: absolute;
+  top: 448px;
+  right: 2.5%;
+  z-index: 20;
+  display: none;
+  width: min(34vw, 500px);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1rem;
+}
+
+.hero-tech-mobile {
+  position: absolute;
+  bottom: 1rem;
+  right: 0.75rem;
+  z-index: 20;
+  display: grid;
+  width: 184px;
+  grid-template-columns: 1fr;
+  gap: 0.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-tech-showcase {
+    position: static;
+    display: grid;
+    width: min(34vw, 500px);
+  }
+  .hero-tech-mobile { display: none; }
+}
+
+.tech-flip-card {
+  min-height: 76px;
+  perspective: 900px;
+  transform-origin: center;
+  animation: tech-card-feature 18000ms cubic-bezier(.22, 1, .36, 1) infinite;
+}
+
+.tech-flip-card__inner {
+  position: relative;
+  height: 100%;
+  min-height: 76px;
+  transform-style: preserve-3d;
+  animation: tech-card-flip 18000ms cubic-bezier(.22, 1, .36, 1) infinite;
+}
+
+.tech-flip-card__face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  border: 1px solid var(--border);
+  border-radius: 0.875rem;
+  background: color-mix(in srgb, var(--card) 96%, transparent);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.06);
+  padding: 0.75rem;
+  backface-visibility: hidden;
+}
+
+.dark .tech-flip-card__face { box-shadow: 0 8px 20px rgba(0, 0, 0, 0.28); }
+
+.tech-flip-card__front { gap: 0.625rem; }
+.tech-flip-card__back { gap: 0.625rem; transform: rotateY(180deg); }
+
+.tech-flip-card--1, .tech-flip-card--1 .tech-flip-card__inner { animation-delay: 0ms; }
+.tech-flip-card--2, .tech-flip-card--2 .tech-flip-card__inner { animation-delay: -3000ms; }
+.tech-flip-card--3, .tech-flip-card--3 .tech-flip-card__inner { animation-delay: -6000ms; }
+.tech-flip-card--4, .tech-flip-card--4 .tech-flip-card__inner { animation-delay: -9000ms; }
+.tech-flip-card--5, .tech-flip-card--5 .tech-flip-card__inner { animation-delay: -12000ms; }
+.tech-flip-card--6, .tech-flip-card--6 .tech-flip-card__inner { animation-delay: -15000ms; }
+
+@keyframes tech-card-flip {
+  0%, 11%, 100% { transform: rotateY(0deg); }
+  15%, 22% { transform: rotateY(180deg); }
+  26% { transform: rotateY(0deg); }
+}
+
+@keyframes tech-card-feature {
+  0%, 11%, 100% { transform: scale(1); }
+  15%, 22% { transform: scale(1.045); }
+  26% { transform: scale(1); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tech-flip-card, .tech-flip-card__inner {
+    animation: none;
+  }
+}
 
 .scroll-reveal {
   opacity: 0;

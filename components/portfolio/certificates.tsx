@@ -14,9 +14,9 @@ export function Certificates() {
       <div className="flex flex-wrap items-end justify-between gap-4">
         <div>
           <p className="text-[11px] font-medium uppercase tracking-[0.14em] text-zinc-500 dark:text-zinc-400">Continuous Learning</p>
-          <h2 id="certificates-heading" className="mt-2 text-[clamp(2rem,4vw,3.25rem)] font-semibold tracking-[-0.07em]">CERTIFICATIONS</h2>
+          <h2 id="certificates-heading" className="mt-2 text-[32px] font-semibold tracking-[-0.05em] sm:text-5xl">CERTIFICATIONS</h2>
         </div>
-        <p className="max-w-[370px] text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">Information Technology Specialist certifications that support my work in IT education and software development.</p>
+        <p className="max-w-[370px] text-sm leading-relaxed text-zinc-600 sm:text-base dark:text-zinc-400">Information Technology Specialist certifications that support my work in IT education and software development.</p>
       </div>
       <div className="mt-8 grid gap-5 sm:grid-cols-2 xl:grid-cols-3">
         {certificates.map(([src, title, issuer]) => (
@@ -24,7 +24,7 @@ export function Certificates() {
             <div className="relative aspect-[1.294] overflow-hidden border border-border bg-card shadow-[0_10px_25px_rgba(0,0,0,0.06)] dark:shadow-[0_10px_25px_rgba(0,0,0,0.3)]">
               <Image src={src} alt={`${title} certificate`} fill sizes="(max-width: 640px) 100vw, (max-width: 1280px) 50vw, 33vw" className="object-cover transition-transform duration-500 group-hover:scale-[1.025]" />
             </div>
-            <div className="mt-3 flex items-start justify-between gap-4"><div><h3 className="text-[16px] font-medium tracking-[-0.03em]">{title}</h3><p className="mt-1 text-[11px] text-zinc-500 dark:text-zinc-400">{issuer}</p></div><span className="mt-1 size-2 rounded-full bg-emerald-500" aria-hidden="true" /></div>
+            <div className="mt-3 flex items-start justify-between gap-4"><div><h3 className="text-xl font-medium tracking-[-0.03em]">{title}</h3><p className="mt-1 text-xs text-zinc-500 dark:text-zinc-400">{issuer}</p></div><span className="mt-1 size-2 rounded-full bg-emerald-500" aria-hidden="true" /></div>
           </article>
         ))}
       </div>

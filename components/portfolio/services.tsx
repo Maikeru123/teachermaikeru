@@ -1,6 +1,6 @@
 "use client"
 
-import { ChevronDown, X } from "lucide-react"
+import { ChevronDown, Code2, Database, Smartphone, X } from "lucide-react"
 import { useState } from "react"
 
 const strengths = [
@@ -27,9 +27,9 @@ const strengths = [
 ] as const
 
 const teachingAreas = [
-  ["WEB DEVELOPMENT", "Teaching students how modern websites and web applications are designed, developed, and structured.", "</>"],
-  ["MOBILE DEVELOPMENT", "Teaching the fundamentals and practical implementation of mobile application development.", "▣"],
-  ["DATABASE DEVELOPMENT", "Teaching database design, SQL, data management, relationships, and database-driven applications.", "◫"],
+  ["WEB DEVELOPMENT", "Teaching students how modern websites and web applications are designed, developed, and structured.", Code2],
+  ["MOBILE DEVELOPMENT", "Teaching the fundamentals and practical implementation of mobile application development.", Smartphone],
+  ["DATABASE DEVELOPMENT", "Teaching database design, SQL, data management, relationships, and database-driven applications.", Database],
 ] as const
 
 const teachingAreaDetails = {
@@ -41,12 +41,12 @@ const teachingAreaDetails = {
   "MOBILE DEVELOPMENT": {
     subtitle: "Cross-Platform Applications",
     cardClass: "border-border bg-card",
-    iconClass: "bg-zinc-800 text-white dark:bg-zinc-200 dark:text-zinc-950",
+    iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
   },
   "DATABASE DEVELOPMENT": {
     subtitle: "Data Design & Management",
     cardClass: "border-border bg-card",
-    iconClass: "bg-zinc-900 text-white dark:bg-zinc-300 dark:text-zinc-950",
+    iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
   },
 } as const
 
@@ -55,29 +55,29 @@ export function Services() {
 
   return (
     <section id="teaching" className="section-frame bg-transparent px-6 py-12 sm:px-12 sm:py-14 lg:px-[4.5%]" aria-labelledby="teaching-heading">
-      <h2 id="teaching-heading" className="text-[clamp(1.75rem,3vw,2.45rem)] font-medium tracking-[-0.07em]">ABOUT</h2>
-      <div className="mt-4 max-w-[1040px] space-y-3 text-[14px] leading-relaxed text-zinc-700 sm:text-[15px] dark:text-zinc-300">
+      <h2 id="teaching-heading" className="text-[32px] font-semibold tracking-[-0.05em] sm:text-5xl">ABOUT</h2>
+      <div className="mt-4 max-w-[1040px] space-y-4 text-sm leading-relaxed text-zinc-700 sm:text-base dark:text-zinc-300">
         <p>I am an IT educator at the University of Mindanao with a strong interest in software development and technology education. I primarily teach web development, mobile application development, and database-related subjects.</p>
         <p>As an educator, I help students understand programming concepts and how they are applied in real-world software development. Alongside teaching, I continue to build and explore web, mobile, and database-driven applications to strengthen my technical skills and bring practical experience into the classroom.</p>
       </div>
-      <h3 className="mt-9 text-[clamp(1.55rem,2.6vw,2.1rem)] font-semibold tracking-[-0.06em]">TEACHING AREAS</h3>
-      <div className="mt-5 grid gap-3 md:grid-cols-3">
-        {teachingAreas.map(([title, description, icon]) => {
+      <h3 className="mt-12 text-2xl font-semibold tracking-[-0.04em]">TEACHING AREAS</h3>
+      <div className="mt-6 grid gap-4 md:grid-cols-3">
+        {teachingAreas.map(([title, description, Icon]) => {
           const details = teachingAreaDetails[title]
 
           return (
-            <article className={`rounded-sm border p-5 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)] ${details.cardClass}`} key={title}>
-              <span className={`inline-flex size-9 items-center justify-center rounded-full text-[14px] font-semibold ${details.iconClass}`}>{icon}</span>
-              <h3 className="mt-5 text-[19px] font-semibold tracking-[-0.04em]">{title}</h3>
-              <p className="mt-1 text-[11px] font-medium italic tracking-[0.01em] text-zinc-500 dark:text-zinc-400">{details.subtitle}</p>
-              <p className="mt-3 text-[13px] leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
+            <article className={`rounded-sm border p-6 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)] ${details.cardClass}`} key={title}>
+              <span className={`inline-flex size-12 items-center justify-center rounded-full ${details.iconClass}`}><Icon className="size-6" strokeWidth={1.75} /></span>
+              <h3 className="mt-6 text-2xl font-semibold tracking-[-0.04em]">{title}</h3>
+              <p className="mt-2 text-xs font-medium italic tracking-[0.01em] text-zinc-500 dark:text-zinc-400">{details.subtitle}</p>
+              <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
             </article>
           )
         })}
       </div>
-      <h3 className="mt-12 text-[clamp(1.45rem,2.5vw,2rem)] font-medium tracking-[-0.06em]">TECHNICAL SKILLS</h3>
-      <p className="mt-2 text-[13px] text-zinc-600 dark:text-zinc-400">Select an area to view the technologies and knowledge I use.</p>
-      <div className="mt-5">
+      <h3 className="mt-12 text-2xl font-semibold tracking-[-0.04em]">TECHNICAL SKILLS</h3>
+      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Select an area to view the technologies and knowledge I use.</p>
+      <div className="mt-6">
         {strengths.map((strength, index) => {
           const isOpen = activeIndex === index
 
@@ -95,9 +95,9 @@ export function Services() {
               <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
                 <div className="min-h-0 overflow-hidden bg-zinc-800 text-white">
                   <div className="px-3 pb-7 sm:px-5 sm:pb-8">
-                    <p className="max-w-[500px] text-[13px] leading-relaxed text-zinc-300 sm:text-[14px]">{strength.description}</p>
+                    <p className="max-w-[500px] text-sm leading-relaxed text-zinc-300 sm:text-base">{strength.description}</p>
                     <div className="mt-5 flex max-w-[580px] flex-wrap gap-2">
-                      {strength.skills.map((skill) => <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-[11px] text-zinc-100 sm:text-[12px]" key={skill}>{skill}</span>)}
+                      {strength.skills.map((skill) => <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs text-zinc-100" key={skill}>{skill}</span>)}
                     </div>
                   </div>
                 </div>
