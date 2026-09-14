@@ -1,0 +1,87 @@
+.project-story-dialog {
+  position: fixed;
+  inset: 0;
+  margin: auto;
+  width: 92vw;
+  max-width: 1600px;
+  height: 92dvh;
+  max-height: 100dvh;
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-poppins), sans-serif;
+}
+.project-story-dialog[open] { animation: story-open 260ms ease-out both; }
+.project-story-dialog::backdrop { background: rgb(0 0 0 / 65%); backdrop-filter: blur(7px); animation: story-backdrop 260ms ease-out both; }
+.story-shell { display: flex; height: 100%; flex-direction: column; }
+.story-scroller { flex: 1; min-height: 0; overflow-y: auto; overscroll-behavior: contain; }
+.story-scene { display: grid; min-height: 100%; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); align-items: center; gap: clamp(24px, 5vw, 88px); padding: clamp(24px, 4vw, 64px); }
+.story-scene--0 { animation: story-fade 320ms ease-out both; }
+.story-scene--1 { animation: story-slide 350ms ease-out both; }
+.story-scene--2 { animation: story-scale 350ms ease-out both; }
+.story-scene[data-direction="-1"] { --scene-distance: -16px; }
+.story-heading { font-size: clamp(30px, 3.65vw, 62px); font-weight: 600; line-height: 1.06; letter-spacing: -.055em; text-transform: uppercase; overflow-wrap: anywhere; }
+.story-heading:focus { outline: none; }
+.story-title-line { display: block; animation: story-line 450ms cubic-bezier(.22,1,.36,1) both; }
+.story-control { display: inline-flex; min-height: 44px; align-items: center; gap: 8px; padding: 8px; font-size: 13px; font-weight: 500; cursor: pointer; border-radius: 3px; }
+.story-control:hover { background: var(--muted); }
+.story-control:disabled { opacity: .35; cursor: default; }
+.story-control:focus-visible, .story-service:focus-visible, .story-bubble:focus-visible { outline: 2px solid var(--foreground); outline-offset: 3px; }
+.story-visual { display: flex; min-width: 0; width: 100%; flex-direction: column; align-items: center; justify-content: center; }
+.story-object { animation: story-object 550ms calc(var(--step, 0) * 110ms) cubic-bezier(.22,1,.36,1) both; }
+.story-token { display: flex; min-height: 100px; min-width: 0; align-items: center; justify-content: center; flex-direction: column; gap: 12px; border: 1px solid var(--border); border-radius: 8px; background: var(--card); padding: 20px 14px; text-align: center; font-size: 13px; font-weight: 500; transition: translate 250ms, opacity 250ms, border-color 250ms; }
+.story-token svg { flex-shrink: 0; }
+.story-service { cursor: pointer; }
+.story-service[aria-pressed="true"] { border-color: var(--foreground); }
+.story-service--muted { opacity: .4 !important; translate: 0 5px; }
+.story-service:hover, .story-tech:hover { border-color: var(--foreground); }
+.story-tech:hover { translate: 0 -4px; }
+.story-transform-step { animation-duration: 650ms; animation-delay: calc(var(--step, 0) * 260ms); }
+.story-scope-tag { border: 1px solid var(--border); border-radius: 20px; padding: 7px 10px; animation: story-narrow 1s calc(500ms + var(--step, 0) * 70ms) both; }
+.story-scope-tag--kept { animation-name: story-keep; }
+.story-collaborator { width: 85%; animation: story-collaborate 850ms ease-out both; }
+.story-collaborator--one { --from-x: -35px; }
+.story-collaborator--two { --from-x: 35px; animation-delay: 150ms; }
+.story-ui-piece { border: 1px solid var(--border); border-radius: 5px; padding: 16px; background: var(--card); font-size: 12px; }
+.story-deadline { animation: story-time 1800ms ease-in-out both; }
+.story-decision { animation: story-line 600ms 900ms both; }
+.story-home { animation: story-line 700ms 400ms both; }
+.story-home-caption { animation: story-line 700ms 850ms both; }
+.story-offline:nth-child(odd) { rotate: -3deg; }
+.story-offline:nth-child(even) { rotate: 3deg; }
+.story-bubble { display: flex; width: 90%; align-items: center; justify-content: space-between; gap: 12px; border: 1px solid var(--border); border-radius: 20px 20px 20px 3px; padding: 18px 20px; background: var(--card); font-size: clamp(16px, 1.5vw, 23px); font-weight: 500; text-align: left; cursor: pointer; }
+.story-bubble:nth-child(2) { align-self: flex-end; border-radius: 20px 20px 3px 20px; }
+.story-bubble:hover { border-color: var(--foreground); }
+.story-converge > :first-child { animation: story-converge-left 1100ms both; }
+.story-converge > :last-child { animation: story-converge-right 1100ms both; }
+.story-website { animation: story-scale 700ms 600ms both; }
+@keyframes story-open { from { opacity: 0; transform: translateY(12px) scale(.985); } to { opacity: 1; transform: none; } }
+@keyframes story-backdrop { from { opacity: 0; } to { opacity: 1; } }
+@keyframes story-fade { from { opacity: 0; } to { opacity: 1; } }
+@keyframes story-slide { from { opacity: 0; transform: translateX(var(--scene-distance, 16px)); } to { opacity: 1; transform: none; } }
+@keyframes story-scale { from { opacity: 0; transform: scale(.975); } to { opacity: 1; transform: none; } }
+@keyframes story-line { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+@keyframes story-object { from { opacity: 0; transform: translateY(18px) scale(.97); } to { opacity: 1; transform: none; } }
+@keyframes story-narrow { to { opacity: .25; transform: scale(.8); } }
+@keyframes story-keep { to { border-color: var(--foreground); transform: scale(1.05); } }
+@keyframes story-collaborate { from { opacity: 0; transform: translateX(var(--from-x)); } to { opacity: 1; transform: none; } }
+@keyframes story-time { from { transform: scaleX(1); } to { transform: scaleX(.15); } }
+@keyframes story-converge-left { to { transform: translateX(36px); opacity: .25; } }
+@keyframes story-converge-right { to { transform: translateX(-36px); opacity: .25; } }
+@media (max-width: 767px) {
+  .project-story-dialog { width: 100%; height: 100dvh; max-width: 100%; border-radius: 0; }
+  .story-scene { grid-template-columns: minmax(0, 1fr); align-content: start; gap: 32px; padding: 28px 24px; }
+  .story-heading { font-size: clamp(30px, 7.5vw, 46px); }
+  .story-visual, .story-image { width: 100%; max-width: 440px; margin-inline: auto; }
+  .story-control { font-size: 12px; }
+  .story-token { min-height: 90px; padding: 14px 10px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .project-story-dialog, .project-story-dialog *, .project-story-dialog::backdrop { animation: none !important; transition: none !important; }
+  .story-tech:hover, .story-service--muted { translate: none; }
+  .story-scope-tag:not(.story-scope-tag--kept) { opacity: .35; }
+  .story-deadline { transform: scaleX(.15); }
+}

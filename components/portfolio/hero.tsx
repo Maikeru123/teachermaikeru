@@ -4,7 +4,8 @@ import Image from "next/image"
 import { useTheme } from "next-themes"
 import { useSyncExternalStore } from "react"
 
-import { ArrowButton, SocialPill } from "./primitives"
+import { ArrowButton } from "./primitives"
+import { RandomFact } from "./random-fact"
 import { TechStackShowcase } from "./tech-stack-showcase"
 
 function HeroIntro() {
@@ -20,23 +21,20 @@ function HeroIntro() {
   )
 }
 
-function HeroSocials() {
-  return (
-    <div className="hero-socials flex max-w-[170px] flex-wrap justify-start gap-2 sm:max-w-none sm:flex-nowrap sm:justify-end">
-      <SocialPill name="Instagram" />
-      <SocialPill name="LinkedIn" />
-      <SocialPill name="Email" />
-      <SocialPill name="GitHub" />
-    </div>
-  )
-}
-
 function HeroWordmark() {
   return (
     <h1 className="hero-wordmark whitespace-nowrap text-[clamp(2.75rem,8.45vw,8.1rem)] font-medium leading-none tracking-[-0.09em] text-zinc-950 dark:text-zinc-100">
       <span className="font-light text-transparent [-webkit-text-stroke:1.5px_#18181b] sm:[-webkit-text-stroke:2px_#18181b] dark:[-webkit-text-stroke:1.5px_#f4f4f5] sm:dark:[-webkit-text-stroke:2px_#f4f4f5]">MICHAEL</span>{" "}
       <span className="font-extrabold">VELEZ</span>
     </h1>
+  )
+}
+
+function HeroEditorial() {
+  return (
+    <p aria-label="Teach. Build. Learn. Repeat." className="border-l border-border pl-5 text-base font-semibold uppercase leading-[1.8] tracking-[0.12em] text-muted-foreground xl:text-lg">
+      {["Teach", "Build", "Learn", "Repeat"].map((word) => <span key={word} className="block">{word}</span>)}
+    </p>
   )
 }
 
@@ -66,31 +64,38 @@ export function Hero() {
 
   return (
     <section className="section-frame relative isolate min-h-[650px] overflow-hidden bg-background lg:min-h-svh" aria-label="Introduction">
-      <div
-        aria-hidden="true"
-        className="pointer-events-none absolute -right-12 bottom-[-25px] z-0 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle_at_center,rgba(212,212,216,0.68)_0%,rgba(228,228,231,0.34)_46%,transparent_72%)] dark:bg-[radial-gradient(circle_at_center,rgba(63,63,70,0.3)_0%,rgba(39,39,42,0.16)_46%,transparent_72%)] sm:inset-x-0 sm:bottom-[-55px] sm:mx-auto sm:h-[560px] sm:w-[560px] lg:h-[590px] lg:w-[590px]"
-      />
+      <div className="relative isolate min-h-[650px] overflow-hidden lg:min-h-svh">
+        <div
+          aria-hidden="true"
+          className="pointer-events-none absolute -right-12 bottom-[-25px] z-0 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle_at_center,rgba(212,212,216,0.68)_0%,rgba(228,228,231,0.34)_46%,transparent_72%)] dark:bg-[radial-gradient(circle_at_center,rgba(63,63,70,0.3)_0%,rgba(39,39,42,0.16)_46%,transparent_72%)] sm:inset-x-0 sm:bottom-[-55px] sm:mx-auto sm:h-[560px] sm:w-[560px] lg:h-[590px] lg:w-[590px]"
+        />
 
-      <div className="relative z-10 hidden min-h-svh flex-col px-[8%] pb-0 pt-16 lg:flex">
-        <div className="flex shrink-0 flex-col items-center gap-14">
-          <div className="self-end"><HeroSocials /></div>
-          <HeroWordmark />
+        <div className="relative z-10 hidden min-h-svh flex-col px-[8%] pb-0 pt-16 lg:flex">
+          <div className="flex shrink-0 flex-col items-center gap-14">
+            <div aria-hidden="true" className="h-[34px]" />
+            <HeroWordmark />
+          </div>
+          <div className="relative grid min-h-[680px] flex-1 grid-cols-[minmax(260px,0.82fr)_minmax(390px,1fr)_minmax(400px,1.05fr)] items-end gap-6 xl:min-h-[660px]">
+            <div className="absolute left-5 top-8 z-20"><HeroEditorial /></div>
+            <div className="absolute right-0 top-6 z-20 w-[min(30vw,360px)]"><RandomFact /></div>
+            <div className="self-end pb-10"><HeroIntro /></div>
+            <Portrait imageSrc={imageSrc} desktop />
+            <div className="self-end justify-self-end pb-16 translate-x-16"><TechStackShowcase /></div>
+          </div>
         </div>
-        <div className="grid min-h-0 flex-1 grid-cols-[minmax(260px,0.82fr)_minmax(390px,1fr)_minmax(400px,1.05fr)] items-end gap-6">
-          <div className="self-end pb-10"><HeroIntro /></div>
-          <Portrait imageSrc={imageSrc} desktop />
-          <div className="self-end justify-self-end pb-16 translate-x-16"><TechStackShowcase /></div>
+
+        <div className="lg:hidden">
+          <div className="pointer-events-none absolute inset-x-6 top-[110px] z-0 flex justify-center overflow-hidden">
+            <HeroWordmark />
+          </div>
+          <Portrait imageSrc={imageSrc} />
+          <div className="absolute left-6 top-[195px] z-20"><HeroIntro /></div>
+          <TechStackShowcase compact />
         </div>
       </div>
-
-      <div className="lg:hidden">
-        <div className="pointer-events-none absolute inset-x-6 top-[110px] z-0 flex justify-center overflow-hidden">
-          <HeroWordmark />
-        </div>
-        <Portrait imageSrc={imageSrc} />
-        <div className="absolute bottom-7 left-4 z-20"><HeroSocials /></div>
-        <div className="absolute left-6 top-[195px] z-20"><HeroIntro /></div>
-        <TechStackShowcase compact />
+      <div className="relative grid gap-8 px-6 pb-10 pt-8 sm:grid-cols-[1fr_2fr] sm:gap-10 sm:px-12 lg:hidden">
+        <div><HeroEditorial /></div>
+        <div className="max-w-sm sm:ml-auto"><RandomFact /></div>
       </div>
     </section>
   )

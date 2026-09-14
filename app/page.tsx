@@ -1,5 +1,6 @@
 import { BackToTop } from "@/components/portfolio/back-to-top"
 import { Certificates } from "@/components/portfolio/certificates"
+import { Contact } from "@/components/portfolio/contact"
 import { Education } from "@/components/portfolio/education"
 import { Experience } from "@/components/portfolio/experience"
 import { Hero } from "@/components/portfolio/hero"
@@ -21,6 +22,7 @@ export default function Page() {
           <ScrollReveal delay={80}><Experience /></ScrollReveal>
           <ScrollReveal delay={80}><Education /></ScrollReveal>
           <ScrollReveal delay={80}><Certificates /></ScrollReveal>
+          <Contact />
         </div>
       </main>
       <BackToTop />

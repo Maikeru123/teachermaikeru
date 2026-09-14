@@ -163,7 +163,22 @@ body { min-width: 320px; }
 .hero-wordmark { animation: content-build 720ms 160ms cubic-bezier(.22, 1, .36, 1) both; }
 .hero-portrait { animation: content-build 800ms 240ms cubic-bezier(.22, 1, .36, 1) both; }
 .hero-intro { animation: content-build 560ms 560ms cubic-bezier(.22, 1, .36, 1) both; }
-.hero-socials { animation: content-build 560ms 680ms cubic-bezier(.22, 1, .36, 1) both; }
+.hero-fact-copy[data-phase="out"] { animation: fact-out 150ms ease-in both; }
+.hero-fact-copy[data-phase="in"] { animation: fact-in 180ms ease-out both; }
+
+@keyframes fact-out {
+  from { opacity: 1; transform: translateY(0); }
+  to { opacity: 0; transform: translateY(-8px); }
+}
+
+@keyframes fact-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-fact-copy[data-phase] { animation: none; }
+}
 
 .hero-tech-showcase {
   position: absolute;
