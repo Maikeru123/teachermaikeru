@@ -11,6 +11,7 @@ export function ProjectStoryDialog({ initialProject, onClose }: { initialProject
   const [projectIndex, setProjectIndex] = useState(initialProject)
   const [sceneIndex, setSceneIndex] = useState(0)
   const [direction, setDirection] = useState(1)
+  const [motionPaused, setMotionPaused] = useState(false)
   const dialog = useRef<HTMLDialogElement>(null)
   const scroller = useRef<HTMLDivElement>(null)
   const heading = useRef<HTMLHeadingElement>(null)
@@ -53,7 +54,7 @@ export function ProjectStoryDialog({ initialProject, onClose }: { initialProject
   }
 
   return createPortal(
-    <dialog ref={dialog} aria-modal="true" aria-labelledby="project-story-title" className="project-story-dialog"
+    <dialog ref={dialog} data-lenis-prevent aria-modal="true" aria-labelledby="project-story-title" className="project-story-dialog"
       onCancel={(event) => { event.preventDefault(); onClose() }}
       onPointerDown={(event) => { backdropPress.current = event.target === event.currentTarget }}
       onClick={(event) => { if (backdropPress.current && event.target === event.currentTarget) onClose() }}
@@ -71,13 +72,13 @@ export function ProjectStoryDialog({ initialProject, onClose }: { initialProject
         if (event.key === "ArrowLeft") { event.preventDefault(); move(-1) }
       }}
     >
-      <div className="story-shell">
+      <div className="story-shell" data-motion-paused={motionPaused}>
         <header className="flex shrink-0 items-center justify-between gap-4 border-b border-border px-5 py-3 sm:px-8">
           <div className="min-w-0">
-            <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Project {String(projectIndex + 1).padStart(2, "0")} / 03</p>
+            <p className="text-[10px] uppercase tracking-[0.16em] text-muted-foreground">Project {String(projectIndex + 1).padStart(2, "0")} / {String(projectStories.length).padStart(2, "0")}</p>
             <h2 id="project-story-title" className="truncate text-base font-semibold sm:text-lg">{project.title}</h2>
           </div>
-          <button type="button" onClick={onClose} className="story-control shrink-0" aria-label="Close project story"><X className="size-4" /><span>Close</span></button>
+          <div className="flex items-center gap-2"><button type="button" className="story-control story-motion-control" aria-pressed={motionPaused} onClick={() => setMotionPaused(!motionPaused)}>{motionPaused ? "Resume motion" : "Pause motion"}</button><button type="button" onClick={onClose} className="story-control shrink-0" aria-label="Close project story"><X className="size-4" /><span>Close</span></button></div>
         </header>
         <div role="progressbar" aria-label="Story progress" aria-valuemin={1} aria-valuemax={project.scenes.length} aria-valuenow={sceneIndex + 1} aria-valuetext={`Scene ${sceneIndex + 1} of ${project.scenes.length}: ${scene.label}`} className="h-0.5 shrink-0 bg-border">
           <div className="h-full origin-left bg-foreground transition-transform duration-300 motion-reduce:transition-none" style={{ transform: `scaleX(${(sceneIndex + 1) / project.scenes.length})` }} />
@@ -89,9 +90,8 @@ export function ProjectStoryDialog({ initialProject, onClose }: { initialProject
               <h3 ref={heading} tabIndex={-1} className="story-heading" aria-label={scene.title.join(" ")}>
                 {scene.title.map((line, index) => <span key={line} aria-hidden="true" className="story-title-line" style={{ animationDelay: `${index * 90}ms` }}>{line}</span>)}
               </h3>
-              {scene.supporting && <p className="mt-6 max-w-md text-base leading-relaxed text-muted-foreground">{scene.supporting}</p>}
+              {scene.supporting && <p className="story-supporting">{scene.supporting}</p>}
               {sceneIndex === 0 && <p className="mt-6 text-xs leading-relaxed text-muted-foreground">{project.category}{project.role && <><br />{project.role}</>}</p>}
-              {project.id === "eventhub" && lastScene && <p className="mt-6 inline-block border-b border-border pb-1 text-xs font-medium uppercase tracking-widest text-muted-foreground">No live demo</p>}
             </div>
             <ProjectStoryVisual project={project} scene={scene} />
           </div>

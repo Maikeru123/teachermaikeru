@@ -1,17 +1,18 @@
 "use client"
 
-import { Menu, X } from "lucide-react"
+import { Download, Menu, X } from "lucide-react"
 import { useEffect, useState } from "react"
 
-import { Availability } from "./primitives"
 import { ThemeToggle } from "./theme-toggle"
 
 const links = [
   { label: "Work", id: "work" },
+  { label: "Projects", id: "projects" },
   { label: "Teaching", id: "teaching" },
-  { label: "Experience", id: "experience" },
+  { label: "Technical", id: "technical" },
   { label: "Education", id: "education" },
   { label: "Certificates", id: "certificates" },
+  { label: "Contact", id: "contact" },
 ] as const
 
 export function Navigation() {
@@ -35,8 +36,15 @@ export function Navigation() {
 
   return (
     <header className="fixed inset-x-0 top-0 z-[60] flex items-center justify-between border-b border-border/70 bg-background/85 px-5 py-3 backdrop-blur-md shadow-[0_4px_18px_rgba(0,0,0,0.04)] sm:px-[4.5%] sm:py-4 dark:shadow-[0_4px_18px_rgba(0,0,0,0.28)]">
-      <Availability />
-      <nav className="hidden items-center gap-1 text-[11px] font-medium md:flex" aria-label="Main navigation">
+      <a
+        href="/VelezMichaelResume.pdf"
+        download
+        className="inline-flex min-h-9 items-center gap-1.5 rounded-full bg-card px-3 py-1.5 text-[11px] font-medium text-zinc-950 shadow-[0_6px_18px_rgba(0,0,0,0.08)] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground dark:text-zinc-100 dark:shadow-[0_6px_18px_rgba(0,0,0,0.3)]"
+      >
+        <Download className="size-3.5" strokeWidth={1.8} />
+        Download resume
+      </a>
+      <nav className="absolute left-1/2 hidden -translate-x-1/2 items-center gap-1 text-[11px] font-medium md:flex" aria-label="Main navigation">
         {links.map(({ label, id }) => (
           <a
             className={`rounded-full px-3 py-2 transition-all duration-300 ${activeSection === id ? "bg-zinc-950 text-white shadow-sm dark:bg-zinc-100 dark:text-zinc-950" : "text-zinc-700 hover:bg-zinc-100 hover:text-zinc-950 dark:text-zinc-300 dark:hover:bg-zinc-800 dark:hover:text-white"}`}

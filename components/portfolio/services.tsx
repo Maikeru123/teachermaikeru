@@ -12,12 +12,12 @@ const strengths = [
   {
     title: "MOBILE DEVELOPMENT",
     description: "Building the fundamentals and practical implementation of mobile applications, interfaces, and integrated features.",
-    skills: ["Flutter", "Dart", "Mobile UI Development", "API Integration"],
+    skills: ["Flutter", "Dart", "React Native", "Android Emulator", "Mobile UI Development", "API Integration"],
   },
   {
     title: "DATABASE & BACKEND",
     description: "Working with database design, SQL, data management, and backend services for database-driven applications.",
-    skills: ["SQL", "Supabase", "Database Design", "Database Management", "API Integration"],
+    skills: ["SQL", "Supabase", "Firebase", "SQLite", "PostgreSQL", "Database Design", "Database Management", "API Integration"],
   },
   {
     title: "OTHER TECHNICAL KNOWLEDGE",
@@ -54,19 +54,18 @@ export function Services() {
   const [activeIndex, setActiveIndex] = useState<number | null>(0)
 
   return (
-    <section id="teaching" className="section-frame bg-transparent px-6 py-12 sm:px-12 sm:py-14 lg:px-[4.5%]" aria-labelledby="teaching-heading">
-      <h2 id="teaching-heading" className="text-[32px] font-semibold tracking-[-0.05em] sm:text-5xl">ABOUT</h2>
-      <div className="mt-4 max-w-[1040px] space-y-4 text-sm leading-relaxed text-zinc-700 sm:text-base dark:text-zinc-300">
-        <p>I am an IT educator at the University of Mindanao with a strong interest in software development and technology education. I primarily teach web development, mobile application development, and database-related subjects.</p>
-        <p>As an educator, I help students understand programming concepts and how they are applied in real-world software development. Alongside teaching, I continue to build and explore web, mobile, and database-driven applications to strengthen my technical skills and bring practical experience into the classroom.</p>
-      </div>
-      <h3 className="mt-12 text-2xl font-semibold tracking-[-0.04em]">TEACHING AREAS</h3>
+    <section id="teaching" className="section-frame story-section bg-transparent" aria-labelledby="teaching-heading">
+      <header className="story-header">
+        <p className="story-kicker">WHAT I SHARE</p>
+        <h2 id="teaching-heading" className="story-title">TEACHING AREAS</h2>
+        <p className="story-summary">The subjects I spend the most time making practical, approachable, and useful for students.</p>
+      </header>
       <div className="mt-6 grid gap-4 md:grid-cols-3">
         {teachingAreas.map(([title, description, Icon]) => {
           const details = teachingAreaDetails[title]
 
           return (
-            <article className={`rounded-sm border p-6 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)] ${details.cardClass}`} key={title}>
+          <article className={`story-reveal rounded-sm border p-6 shadow-[0_8px_18px_rgba(0,0,0,0.035)] transition-all duration-300 hover:-translate-y-1 hover:border-foreground/50 dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)] ${details.cardClass}`} key={title}>
               <span className={`inline-flex size-12 items-center justify-center rounded-full ${details.iconClass}`}><Icon className="size-6" strokeWidth={1.75} /></span>
               <h3 className="mt-6 text-2xl font-semibold tracking-[-0.04em]">{title}</h3>
               <p className="mt-2 text-xs font-medium italic tracking-[0.01em] text-zinc-500 dark:text-zinc-400">{details.subtitle}</p>
@@ -75,8 +74,11 @@ export function Services() {
           )
         })}
       </div>
-      <h3 className="mt-12 text-2xl font-semibold tracking-[-0.04em]">TECHNICAL SKILLS</h3>
-      <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-400">Select an area to view the technologies and knowledge I use.</p>
+      <header id="technical" className="story-header story-header--technical">
+        <p className="story-kicker">WHAT I WORK WITH</p>
+        <h2 className="story-title">TECHNICAL SKILLS</h2>
+        <p className="story-summary">The tools and working knowledge behind the projects, lessons, and systems I build.</p>
+      </header>
       <div className="mt-6">
         {strengths.map((strength, index) => {
           const isOpen = activeIndex === index

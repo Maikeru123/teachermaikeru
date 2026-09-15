@@ -30,14 +30,6 @@ function HeroWordmark() {
   )
 }
 
-function HeroEditorial() {
-  return (
-    <p aria-label="Teach. Build. Learn. Repeat." className="border-l border-border pl-5 text-base font-semibold uppercase leading-[1.8] tracking-[0.12em] text-muted-foreground xl:text-lg">
-      {["Teach", "Build", "Learn", "Repeat"].map((word) => <span key={word} className="block">{word}</span>)}
-    </p>
-  )
-}
-
 function Portrait({ imageSrc, desktop = false }: { imageSrc: string; desktop?: boolean }) {
   return (
     <div className={desktop ? "hero-portrait relative h-[510px] w-[530px] justify-self-center" : "hero-portrait absolute -right-10 bottom-0 z-10 h-[300px] w-[300px] max-w-none"}>
@@ -47,7 +39,7 @@ function Portrait({ imageSrc, desktop = false }: { imageSrc: string; desktop?: b
         fill
         preload
         sizes="(max-width: 640px) 100vw, 530px"
-        className={desktop ? "translate-y-[130px] scale-[0.99] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_0_24px_rgba(161,161,170,0.14)]" : "translate-y-[78px] scale-[0.95] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)]"}
+        className={desktop ? "hero-portrait-cut -translate-y-[90px] scale-[0.99] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)] dark:drop-shadow-[0_0_24px_rgba(161,161,170,0.14)]" : "translate-y-[78px] scale-[0.95] object-contain object-top drop-shadow-[0_8px_14px_rgba(0,0,0,0.12)]"}
       />
     </div>
   )
@@ -70,17 +62,16 @@ export function Hero() {
           className="pointer-events-none absolute -right-12 bottom-[-25px] z-0 h-[350px] w-[350px] rounded-full bg-[radial-gradient(circle_at_center,rgba(212,212,216,0.68)_0%,rgba(228,228,231,0.34)_46%,transparent_72%)] dark:bg-[radial-gradient(circle_at_center,rgba(63,63,70,0.3)_0%,rgba(39,39,42,0.16)_46%,transparent_72%)] sm:inset-x-0 sm:bottom-[-55px] sm:mx-auto sm:h-[560px] sm:w-[560px] lg:h-[590px] lg:w-[590px]"
         />
 
-        <div className="relative z-10 hidden min-h-svh flex-col px-[8%] pb-0 pt-16 lg:flex">
+        <div className="relative z-10 hidden min-h-svh flex-col px-[8%] pb-0 pt-5 lg:flex">
           <div className="flex shrink-0 flex-col items-center gap-14">
-            <div aria-hidden="true" className="h-[34px]" />
+            <div aria-hidden="true" className="h-2" />
             <HeroWordmark />
           </div>
           <div className="relative grid min-h-[680px] flex-1 grid-cols-[minmax(260px,0.82fr)_minmax(390px,1fr)_minmax(400px,1.05fr)] items-end gap-6 xl:min-h-[660px]">
-            <div className="absolute left-5 top-8 z-20"><HeroEditorial /></div>
             <div className="absolute right-0 top-6 z-20 w-[min(30vw,360px)]"><RandomFact /></div>
-            <div className="self-end pb-10"><HeroIntro /></div>
+            <div className="self-end pb-[180px]"><HeroIntro /></div>
             <Portrait imageSrc={imageSrc} desktop />
-            <div className="self-end justify-self-end pb-16 translate-x-16"><TechStackShowcase /></div>
+            <div className="self-end justify-self-end pb-[204px] translate-x-16"><TechStackShowcase /></div>
           </div>
         </div>
 
@@ -90,11 +81,9 @@ export function Hero() {
           </div>
           <Portrait imageSrc={imageSrc} />
           <div className="absolute left-6 top-[195px] z-20"><HeroIntro /></div>
-          <TechStackShowcase compact />
         </div>
       </div>
-      <div className="relative grid gap-8 px-6 pb-10 pt-8 sm:grid-cols-[1fr_2fr] sm:gap-10 sm:px-12 lg:hidden">
-        <div><HeroEditorial /></div>
+      <div className="relative px-6 pb-10 pt-8 sm:px-12 lg:hidden">
         <div className="max-w-sm sm:ml-auto"><RandomFact /></div>
       </div>
     </section>

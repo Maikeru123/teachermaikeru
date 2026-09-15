@@ -2,6 +2,7 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { Poppins } from "next/font/google"
 import { ThemeProvider } from "@/components/theme-provider"
+import { SmoothScroll } from "@/components/portfolio/smooth-scroll"
 
 const poppins = Poppins({
   subsets: ["latin"],
@@ -32,7 +33,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={`${poppins.variable} antialiased`} suppressHydrationWarning>
-      <body><ThemeProvider>{children}</ThemeProvider></body>
+      <body><ThemeProvider><SmoothScroll>{children}</SmoothScroll></ThemeProvider></body>
     </html>
   )
 }
