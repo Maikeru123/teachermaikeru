@@ -1,113 +1,343 @@
 "use client"
 
-import { ChevronDown, Code2, Database, Smartphone, X } from "lucide-react"
-import { useState } from "react"
+import {
+  ArrowDown,
+  ArrowRight,
+  Code2,
+  Database,
+  Smartphone,
+} from "lucide-react"
+import { useEffect, useRef, useState, type KeyboardEvent } from "react"
+import { skillDetails } from "@/lib/skills"
+import { SkillPlayground } from "./skill-playground"
+import { TeachingGraphic } from "./teaching-graphic"
+import "./teaching-and-skills.css"
 
-const strengths = [
+const PANEL_EXIT_DURATION = 220
+const PANEL_ENTER_DURATION = 320
+
+const skillCategories = [
   {
-    title: "WEB DEVELOPMENT",
-    description: "Developing responsive, modern websites and web applications with frontend technologies and ASP.NET.",
-    skills: ["HTML", "CSS", "JavaScript", "TypeScript", "React", "Next.js", "Tailwind CSS", "shadcn/ui", "ASP.NET"],
+    id: "web",
+    label: "Web",
+    skills: [
+      skillDetails["Next.js"],
+      skillDetails.React,
+      skillDetails.TypeScript,
+      skillDetails.JavaScript,
+      skillDetails["Tailwind CSS"],
+      skillDetails["shadcn/ui"],
+      skillDetails.HTML,
+      skillDetails.CSS,
+      skillDetails.Laravel,
+      skillDetails.PHP,
+    ],
   },
   {
-    title: "MOBILE DEVELOPMENT",
-    description: "Building the fundamentals and practical implementation of mobile applications, interfaces, and integrated features.",
-    skills: ["Flutter", "Dart", "React Native", "Android Emulator", "Mobile UI Development", "API Integration"],
+    id: "mobile",
+    label: "Mobile",
+    skills: [skillDetails.Flutter, skillDetails.Dart, skillDetails.Firebase],
   },
   {
-    title: "DATABASE & BACKEND",
-    description: "Working with database design, SQL, data management, and backend services for database-driven applications.",
-    skills: ["SQL", "Supabase", "Firebase", "SQLite", "PostgreSQL", "Database Design", "Database Management", "API Integration"],
+    id: "backend",
+    label: "Backend",
+    skills: [
+      skillDetails.PHP,
+      skillDetails.Laravel,
+      skillDetails["C#"],
+      skillDetails["ASP.NET"],
+      skillDetails["Entity Framework"],
+      skillDetails.Supabase,
+    ],
   },
   {
-    title: "OTHER TECHNICAL KNOWLEDGE",
-    description: "Supporting technical work through version control, troubleshooting, IT fundamentals, and practical problem solving.",
-    skills: ["Git / Version Control", "Computer Troubleshooting", "IT Fundamentals", "Google Maps API", "Algorithms and Problem Solving"],
+    id: "database",
+    label: "Database",
+    skills: [
+      skillDetails.MySQL,
+      skillDetails.SQL,
+      skillDetails.Supabase,
+      skillDetails.Firebase,
+    ],
+  },
+  {
+    id: "tools",
+    label: "Tools",
+    skills: [
+      skillDetails.Git,
+      skillDetails.GitHub,
+      skillDetails["VS Code"],
+      skillDetails.Vercel,
+    ],
   },
 ] as const
 
 const teachingAreas = [
-  ["WEB DEVELOPMENT", "Teaching students how modern websites and web applications are designed, developed, and structured.", Code2],
-  ["MOBILE DEVELOPMENT", "Teaching the fundamentals and practical implementation of mobile application development.", Smartphone],
-  ["DATABASE DEVELOPMENT", "Teaching database design, SQL, data management, relationships, and database-driven applications.", Database],
+  {
+    id: "web",
+    title: "Web Development",
+    description:
+      "Helping students understand how web applications are structured, designed, and developed.",
+    Icon: Code2,
+    caption: "Structure becomes a working page.",
+  },
+  {
+    id: "mobile",
+    title: "Mobile Application Development",
+    description:
+      "Guiding students through practical mobile application development.",
+    Icon: Smartphone,
+    caption: "An idea becomes an interface.",
+  },
+  {
+    id: "database",
+    title: "Database Development",
+    description:
+      "Teaching database design, relationships, queries, and data management.",
+    Icon: Database,
+    caption: "Individual records become connected data.",
+  },
 ] as const
 
-const teachingAreaDetails = {
-  "WEB DEVELOPMENT": {
-    subtitle: "Frontend & Web Technologies",
-    cardClass: "border-border bg-card",
-    iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
-  },
-  "MOBILE DEVELOPMENT": {
-    subtitle: "Cross-Platform Applications",
-    cardClass: "border-border bg-card",
-    iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
-  },
-  "DATABASE DEVELOPMENT": {
-    subtitle: "Data Design & Management",
-    cardClass: "border-border bg-card",
-    iconClass: "bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950",
-  },
-} as const
+type PanelPhase = "idle" | "out" | "in"
 
 export function Services() {
-  const [activeIndex, setActiveIndex] = useState<number | null>(0)
+  const [visibleAreas, setVisibleAreas] = useState<string[]>([])
+  const [replayKeys, setReplayKeys] = useState<Record<string, number>>({})
+  const [selectedCategory, setSelectedCategory] = useState(0)
+  const [displayedCategory, setDisplayedCategory] = useState(0)
+  const [panelPhase, setPanelPhase] = useState<PanelPhase>("idle")
+  const teachingRefs = useRef<(HTMLElement | null)[]>([])
+  const tabRefs = useRef<(HTMLButtonElement | null)[]>([])
+  const panelTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) {
+          if (!entry.isIntersecting) continue
+          const id = (entry.target as HTMLElement).dataset.teachingId
+          if (id) {
+            setVisibleAreas((current) =>
+              current.includes(id) ? current : [...current, id]
+            )
+          }
+          observer.unobserve(entry.target)
+        }
+      },
+      { rootMargin: "0px 0px -12% 0px", threshold: 0.18 }
+    )
+
+    for (const element of teachingRefs.current) {
+      if (element) observer.observe(element)
+    }
+
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(
+    () => () => {
+      if (panelTimer.current) clearTimeout(panelTimer.current)
+    },
+    []
+  )
+
+  function replayIllustration(id: string) {
+    if (!visibleAreas.includes(id)) return
+    setReplayKeys((current) => ({ ...current, [id]: (current[id] ?? 0) + 1 }))
+  }
+
+  function changeCategory(index: number) {
+    if (index === selectedCategory && panelPhase !== "out") return
+
+    if (panelTimer.current) clearTimeout(panelTimer.current)
+    setSelectedCategory(index)
+
+    if (index === displayedCategory) {
+      setPanelPhase("in")
+      panelTimer.current = setTimeout(() => {
+        setPanelPhase("idle")
+        panelTimer.current = null
+      }, PANEL_ENTER_DURATION)
+      return
+    }
+
+    setPanelPhase("out")
+    panelTimer.current = setTimeout(() => {
+      setDisplayedCategory(index)
+      setPanelPhase("in")
+      panelTimer.current = setTimeout(() => {
+        setPanelPhase("idle")
+        panelTimer.current = null
+      }, PANEL_ENTER_DURATION)
+    }, PANEL_EXIT_DURATION)
+  }
+
+  function selectWithKeyboard(
+    event: KeyboardEvent<HTMLButtonElement>,
+    index: number
+  ) {
+    let next: number
+
+    switch (event.key) {
+      case "ArrowDown":
+      case "ArrowRight":
+        next = (index + 1) % skillCategories.length
+        break
+      case "ArrowUp":
+      case "ArrowLeft":
+        next = (index + skillCategories.length - 1) % skillCategories.length
+        break
+      case "Home":
+        next = 0
+        break
+      case "End":
+        next = skillCategories.length - 1
+        break
+      default:
+        return
+    }
+
+    event.preventDefault()
+    changeCategory(next)
+    tabRefs.current[next]?.focus()
+  }
+
+  const category = skillCategories[displayedCategory]
 
   return (
-    <section id="teaching" className="section-frame story-section bg-transparent" aria-labelledby="teaching-heading">
-      <header className="story-header">
-        <p className="story-kicker">WHAT I SHARE</p>
-        <h2 id="teaching-heading" className="story-title">TEACHING AREAS</h2>
-        <p className="story-summary">The subjects I spend the most time making practical, approachable, and useful for students.</p>
-      </header>
-      <div className="mt-6 grid gap-4 md:grid-cols-3">
-        {teachingAreas.map(([title, description, Icon]) => {
-          const details = teachingAreaDetails[title]
+    <>
+      <section
+        id="teaching"
+        className="page-container story-section bg-background"
+        aria-labelledby="teaching-heading"
+      >
+        <header className="story-header">
+          <p className="story-kicker">WHAT I SHARE</p>
+          <h2 id="teaching-heading" className="story-title">
+            TEACHING AREAS
+          </h2>
+          <p className="story-summary">
+            IT Educator at the University of Mindanao.
+          </p>
+        </header>
 
-          return (
-          <article className={`story-reveal rounded-sm border p-6 shadow-[0_8px_18px_rgba(0,0,0,0.035)] transition-all duration-300 hover:-translate-y-1 hover:border-foreground/50 dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)] ${details.cardClass}`} key={title}>
-              <span className={`inline-flex size-12 items-center justify-center rounded-full ${details.iconClass}`}><Icon className="size-6" strokeWidth={1.75} /></span>
-              <h3 className="mt-6 text-2xl font-semibold tracking-[-0.04em]">{title}</h3>
-              <p className="mt-2 text-xs font-medium italic tracking-[0.01em] text-zinc-500 dark:text-zinc-400">{details.subtitle}</p>
-              <p className="mt-4 text-sm leading-relaxed text-zinc-600 dark:text-zinc-400">{description}</p>
-            </article>
-          )
-        })}
-      </div>
-      <header id="technical" className="story-header story-header--technical">
-        <p className="story-kicker">WHAT I WORK WITH</p>
-        <h2 className="story-title">TECHNICAL SKILLS</h2>
-        <p className="story-summary">The tools and working knowledge behind the projects, lessons, and systems I build.</p>
-      </header>
-      <div className="mt-6">
-        {strengths.map((strength, index) => {
-          const isOpen = activeIndex === index
+        <div className="teaching-journey">
+          {teachingAreas.map(
+            ({ id, title, description, Icon, caption }, index) => {
+              const isVisible = visibleAreas.includes(id)
 
-          return (
-            <article className={`overflow-hidden border-b border-zinc-400 dark:border-zinc-700 ${isOpen ? "border-b-0" : ""}`} key={strength.title}>
-              <button
-                type="button"
-                className={`group flex w-full items-center justify-between px-3 text-left transition-colors duration-300 sm:px-5 ${isOpen ? "bg-zinc-800 py-6 text-white sm:py-7" : "py-5 hover:bg-secondary sm:py-5.5"}`}
-                aria-expanded={isOpen}
-                onClick={() => setActiveIndex(isOpen ? null : index)}
-              >
-                <span className={`text-[clamp(1.5rem,3.35vw,3rem)] font-light tracking-[-0.075em] ${isOpen ? "font-normal" : ""}`}>{strength.title}</span>
-                {isOpen ? <X className="size-5 shrink-0 sm:size-6" strokeWidth={1.3} /> : <ChevronDown className="size-5 shrink-0 transition-transform duration-300 group-hover:translate-y-0.5 sm:size-6" strokeWidth={1.45} />}
-              </button>
-              <div className={`grid transition-[grid-template-rows] duration-500 ease-[cubic-bezier(.22,1,.36,1)] ${isOpen ? "grid-rows-[1fr]" : "grid-rows-[0fr]"}`}>
-                <div className="min-h-0 overflow-hidden bg-zinc-800 text-white">
-                  <div className="px-3 pb-7 sm:px-5 sm:pb-8">
-                    <p className="max-w-[500px] text-sm leading-relaxed text-zinc-300 sm:text-base">{strength.description}</p>
-                    <div className="mt-5 flex max-w-[580px] flex-wrap gap-2">
-                      {strength.skills.map((skill) => <span className="rounded-full border border-white/20 bg-white/5 px-3 py-1.5 text-xs text-zinc-100" key={skill}>{skill}</span>)}
+              return (
+                <article
+                  key={id}
+                  ref={(element) => {
+                    teachingRefs.current[index] = element
+                  }}
+                  tabIndex={0}
+                  data-teaching-id={id}
+                  data-visible={isVisible}
+                  className="teaching-scene"
+                  onPointerEnter={(event) => {
+                    if (event.pointerType === "mouse") replayIllustration(id)
+                  }}
+                  onFocus={() => replayIllustration(id)}
+                >
+                  <div className="teaching-copy">
+                    <div className="teaching-label">
+                      <Icon aria-hidden="true" />
                     </div>
+                    <h3>{title}</h3>
+                    <p>{description}</p>
                   </div>
-                </div>
+
+                  <div
+                    className="teaching-visual"
+                    aria-labelledby={`teaching-caption-${id}`}
+                  >
+                    <TeachingGraphic
+                      key={`${id}-${replayKeys[id] ?? 0}`}
+                      kind={id}
+                    />
+                    <p id={`teaching-caption-${id}`}>{caption}</p>
+                  </div>
+                </article>
+              )
+            }
+          )}
+        </div>
+      </section>
+
+      <section
+        id="technical"
+        className="page-container section-frame story-section technical-section bg-background"
+        aria-labelledby="technical-heading"
+      >
+        <div className="chapter-bridge" aria-hidden="true">
+          <span />
+          <ArrowDown className="size-4" />
+          <span />
+        </div>
+        <header className="story-header">
+          <p className="story-kicker">WHAT I BUILD WITH</p>
+          <h2 id="technical-heading" className="story-title">
+            TECHNICAL SKILLS
+          </h2>
+          <p className="story-summary">Explore the technologies I use.</p>
+        </header>
+
+        <div className="technology-explorer">
+          <div
+            role="tablist"
+            aria-label="Technology categories"
+            className="technology-categories"
+          >
+            {skillCategories.map((item, index) => (
+              <button
+                key={item.id}
+                ref={(element) => {
+                  tabRefs.current[index] = element
+                }}
+                type="button"
+                role="tab"
+                id={`technology-tab-${item.id}`}
+                aria-controls={`technology-panel-${item.id}`}
+                aria-selected={selectedCategory === index}
+                tabIndex={selectedCategory === index ? 0 : -1}
+                className="technology-category"
+                onFocus={() => changeCategory(index)}
+                onPointerEnter={(event) => {
+                  if (event.pointerType === "mouse") changeCategory(index)
+                }}
+                onClick={() => changeCategory(index)}
+                onKeyDown={(event) => selectWithKeyboard(event, index)}
+              >
+                <span className="technology-category-label">{item.label}</span>
+                <ArrowRight aria-hidden="true" />
+              </button>
+            ))}
+          </div>
+
+          <div className="technology-canvas">
+            <div
+              id={`technology-panel-${category.id}`}
+              role="tabpanel"
+              aria-labelledby={`technology-tab-${category.id}`}
+              tabIndex={0}
+              data-phase={panelPhase}
+              className="technology-panel"
+            >
+              <div className="technology-panel-heading">
+                <h3>{category.label}</h3>
               </div>
-            </article>
-          )
-        })}
-      </div>
-    </section>
+
+              <SkillPlayground
+                skills={category.skills}
+                active={panelPhase === "idle"}
+              />
+            </div>
+          </div>
+        </div>
+      </section>
+    </>
   )
 }

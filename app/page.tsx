@@ -11,10 +11,10 @@ import { Services } from "@/components/portfolio/services"
 export default function Page() {
   return (
     <>
-      <a href="#main-content" className="sr-only fixed left-4 top-4 z-[70] rounded-full bg-zinc-950 px-4 py-2 text-sm font-medium text-white focus:not-sr-only dark:bg-zinc-100 dark:text-zinc-950">Skip to content</a>
+      <a href="#main-content" className="sr-only fixed left-4 top-4 z-[70] rounded-full bg-primary px-4 py-2 text-sm font-medium text-primary-foreground focus:not-sr-only focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring">Skip to content</a>
       <Navigation />
       <main id="main-content" className="cloud-page">
-        <div className="page-shell mx-auto w-full overflow-hidden border border-border shadow-[0_17px_46px_rgba(0,0,0,0.14)]">
+        <div className="page-shell w-full">
           <ScrollReveal><Hero /></ScrollReveal>
           <ScrollReveal delay={80}><Projects /></ScrollReveal>
           <ScrollReveal delay={80}><Services /></ScrollReveal>

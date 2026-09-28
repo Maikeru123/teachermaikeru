@@ -20,8 +20,8 @@ export default async function OpenGraphImage() {
     (
       <div
         style={{
-          background: "#18181b",
-          color: "#fafafa",
+          background: "#010101",
+          color: "#f5f5f5",
           display: "flex",
           height: "100%",
           overflow: "hidden",
@@ -34,7 +34,7 @@ export default async function OpenGraphImage() {
           <div
             style={{
               alignItems: "center",
-              background: "#27272a",
+              background: "#111111",
               alignSelf: "flex-start",
               borderRadius: "999px",
               display: "flex",
@@ -42,13 +42,13 @@ export default async function OpenGraphImage() {
               padding: "11px 18px",
             }}
           >
-            <span style={{ background: "#10b981", borderRadius: "999px", display: "flex", height: 10, marginRight: 10, width: 10 }} />
+            <span style={{ background: "#06b6d4", borderRadius: "999px", display: "flex", height: 10, marginRight: 10, width: 10 }} />
             IT Educator · University of Mindanao
           </div>
           <div style={{ display: "flex", flexDirection: "column", marginTop: "88px" }}>
-            <span style={{ color: "#a1a1aa", fontSize: 23, letterSpacing: "0.14em" }}>MICHAEL AGUIDO L. VELEZ</span>
+            <span style={{ color: "#a3a3a3", fontSize: 23, letterSpacing: "0.14em" }}>MICHAEL AGUIDO L. VELEZ</span>
             <span style={{ fontSize: 72, fontWeight: 700, letterSpacing: "-0.06em", lineHeight: 1.05, marginTop: 16 }}>IT Educator &amp; Software Developer</span>
-            <span style={{ color: "#d4d4d8", fontSize: 27, lineHeight: 1.35, marginTop: 26 }}>Educator. Developer. Continuous learner.</span>
+            <span style={{ color: "#f5f5f5", fontSize: 27, lineHeight: 1.35, marginTop: 26 }}>Educator. Developer. Continuous learner.</span>
           </div>
         </div>
         <img

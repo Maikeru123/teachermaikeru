@@ -32,7 +32,7 @@ export default function RootLayout({
   children: React.ReactNode
 }>) {
   return (
-    <html lang="en" className={`${poppins.variable} antialiased`} suppressHydrationWarning>
+    <html lang="en" className={`${poppins.variable} theme-colors antialiased`} suppressHydrationWarning>
       <body><ThemeProvider><SmoothScroll>{children}</SmoothScroll></ThemeProvider></body>
     </html>
   )

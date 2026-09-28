@@ -1,5 +1,26 @@
 # Next.js template
 
+## Responsive layout checks
+
+Build the site, then run the browser audit (uses installed Google Chrome):
+
+```bash
+npm run build
+npm run test:responsive
+```
+
+Playwright starts the production server on port 3001. The suite covers 17 phone,
+tablet, laptop, desktop, and landscape viewports, both themes, all project-story
+scenes, teaching illustrations, technology explorer, keyboard/touch controls,
+form validation, and reduced motion. It verifies full-width sections and the
+current education content. Contact submissions
+use mocked responses and do not send email. Screenshots are saved in
+`test-results/`; the HTML report is in `playwright-report/`.
+
+Run one size with `npm run test:responsive -- --project=320x568`.
+See [the responsiveness audit](docs/responsiveness-audit.md) for layout decisions
+and the verification matrix.
+
 ## Portfolio contact email setup
 
 The contact form sends email through the server route `/api/contact` using the

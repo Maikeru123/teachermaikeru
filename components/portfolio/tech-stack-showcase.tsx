@@ -15,15 +15,16 @@ function makeCards(): TechCard[] {
   return Array.from({ length: 6 }, (_, index) => ({ front: technologies[index], back: technologies[index + 6], flipped: false, transitioning: false }))
 }
 
-export function TechStackShowcase({ compact = false }: { compact?: boolean }) {
+export function TechStackShowcase() {
   const [cards, setCards] = useState<TechCard[]>(makeCards)
   const cardsRef = useRef(cards)
   useEffect(() => { cardsRef.current = cards }, [cards])
 
   useEffect(() => {
-    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)")
     const completionTimers = new Set<number>()
     const rotateOne = () => {
+      if (reducedMotion.matches || document.hidden) return
       const current = cardsRef.current
       const eligible = current.map((card, index) => !card.transitioning ? index : -1).filter((index) => index >= 0)
       if (!eligible.length) return
@@ -51,14 +52,13 @@ export function TechStackShowcase({ compact = false }: { compact?: boolean }) {
     return () => { window.clearTimeout(first); window.clearInterval(interval); completionTimers.forEach(window.clearTimeout) }
   }, [])
 
-  const visibleCards = compact ? cards.slice(0, 3) : cards
-  return <aside className={compact ? "hero-tech-mobile" : "hero-tech-showcase"} aria-label="Technology stack">
-    {visibleCards.map((card, index) => {
+  return <aside className="hero-tech-showcase" aria-label="Technology stack">
+    {cards.map((card, index) => {
       const FrontIcon = card.front.icon
       const BackIcon = card.back.icon
       return <article className={`tech-flip-card${card.flipped ? " is-flipped" : ""}`} key={index}><div className="tech-flip-card__inner">
-        <div className="tech-flip-card__face tech-flip-card__front"><span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"><FrontIcon className="size-4" strokeWidth={1.75} /></span><span className="truncate text-sm font-semibold">{card.front.name}</span></div>
-        <div className="tech-flip-card__face tech-flip-card__back"><span className="inline-flex size-8 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"><BackIcon className="size-4" strokeWidth={1.75} /></span><span className="truncate text-sm font-semibold">{card.back.name}</span></div>
+        <div className="tech-flip-card__face tech-flip-card__front" aria-hidden={card.flipped}><span className="tech-flip-card__icon inline-flex size-8 shrink-0 items-center justify-center rounded-full"><FrontIcon className="size-4" strokeWidth={1.75} /></span><span className="tech-flip-card__name">{card.front.name}</span></div>
+        <div className="tech-flip-card__face tech-flip-card__back" aria-hidden={!card.flipped}><span className="tech-flip-card__icon inline-flex size-8 shrink-0 items-center justify-center rounded-full"><BackIcon className="size-4" strokeWidth={1.75} /></span><span className="tech-flip-card__name">{card.back.name}</span></div>
       </div></article>
     })}
   </aside>

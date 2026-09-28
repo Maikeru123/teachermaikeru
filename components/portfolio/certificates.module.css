@@ -1,0 +1,295 @@
+.marquee {
+  --certificate-gap: clamp(14px, 2vw, 28px);
+  margin-inline: calc(var(--page-gutter) * -1);
+  overflow: hidden;
+  padding-block: clamp(22px, 3vw, 38px);
+}
+
+.track {
+  display: flex;
+  width: max-content;
+  animation: certificates-marquee 42s linear infinite;
+  will-change: transform;
+}
+
+.group {
+  display: flex;
+  flex-shrink: 0;
+  gap: var(--certificate-gap);
+  padding-right: var(--certificate-gap);
+}
+
+.marquee:hover .track,
+.marquee[data-modal-open="true"] .track,
+.marquee:has(.card:focus-visible):not([data-resume-after-dialog="true"])
+  .track {
+  animation-play-state: paused;
+}
+
+.cardItem {
+  position: relative;
+  width: clamp(250px, 27vw, 390px);
+  flex: 0 0 auto;
+  transition: opacity 280ms ease;
+}
+
+.card {
+  display: block;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+  transform-origin: center;
+  transition:
+    transform 300ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 280ms ease;
+}
+
+.imageFrame {
+  position: relative;
+  display: block;
+  aspect-ratio: 3300 / 2550;
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+  box-shadow: 0 10px 24px rgb(0 0 0 / 7%);
+  transition:
+    border-color 280ms ease,
+    box-shadow 280ms ease;
+}
+
+.image {
+  object-fit: contain;
+}
+
+.cardCopy {
+  display: grid;
+  gap: 3px;
+  padding-top: 12px;
+}
+
+.cardTitle {
+  font-size: clamp(1rem, 1.4vw, 1.25rem);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.035em;
+}
+
+.cardCredential {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  font-weight: 500;
+  line-height: 1.5;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.card:focus-visible {
+  outline: none;
+}
+
+.card:focus-visible .imageFrame {
+  outline: 2px solid var(--ring);
+  outline-offset: 4px;
+}
+
+.track:has(.card:hover) .card:not(:hover),
+.track:has(.card:focus-visible) .card:not(:focus-visible) {
+  opacity: 0.58;
+}
+
+.card:hover,
+.card:focus-visible {
+  position: relative;
+  z-index: 2;
+  transform: scale(1.06);
+}
+
+.card:hover .imageFrame,
+.card:focus-visible .imageFrame {
+  border-color: var(--accent);
+  box-shadow: 0 16px 34px rgb(0 0 0 / 14%);
+}
+
+.dialogCredential,
+.metadata dt {
+  color: var(--muted-foreground);
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.openCertificate:focus-visible {
+  outline: 2px solid var(--ring);
+  outline-offset: 3px;
+}
+
+.dialogContent {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1.4fr) minmax(320px, 0.8fr);
+  overflow-y: auto;
+}
+
+.dialogImageFrame {
+  position: relative;
+  align-self: center;
+  aspect-ratio: 3300 / 2550;
+  margin: clamp(16px, 3vw, 36px);
+  overflow: hidden;
+  border: 1px solid var(--border);
+  background: var(--surface);
+}
+
+.dialogImage {
+  object-fit: contain;
+}
+
+.dialogDetails {
+  display: flex;
+  min-width: 0;
+  flex-direction: column;
+  justify-content: center;
+  padding: clamp(24px, 4vw, 52px);
+  border-left: 1px solid var(--border);
+}
+
+.dialogTitle {
+  margin-top: 8px;
+  font-size: clamp(2rem, 3.5vw, 3rem);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.06em;
+  overflow-wrap: normal;
+}
+
+.dialogTitle::after {
+  content: "";
+  display: block;
+  width: 2.5rem;
+  height: 2px;
+  margin-top: 14px;
+  background: var(--accent);
+}
+
+.dialogTitle:focus {
+  outline: none;
+}
+
+.dialogDescription {
+  margin-top: 20px;
+  color: var(--muted-foreground);
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+.metadata {
+  margin-top: 28px;
+  padding-top: 20px;
+  border-top: 1px solid var(--border);
+}
+
+.metadata div {
+  display: grid;
+  gap: 4px;
+}
+
+.metadata dd {
+  font-size: 14px;
+  font-weight: 500;
+}
+
+.openCertificate {
+  display: inline-flex;
+  min-height: 44px;
+  align-items: center;
+  align-self: flex-start;
+  gap: 8px;
+  margin-top: 32px;
+  color: var(--accent-readable);
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.openCertificate svg {
+  width: 16px;
+  height: 16px;
+  transition: transform 220ms ease;
+}
+
+.openCertificate:hover svg {
+  transform: translate(2px, -2px);
+}
+
+.openCertificate:hover {
+  color: var(--accent-hover);
+}
+
+@keyframes certificates-marquee {
+  to {
+    transform: translateX(-50%);
+  }
+}
+
+@media (max-width: 767px) {
+  .marquee {
+    --certificate-gap: 14px;
+  }
+
+  .cardItem {
+    width: clamp(238px, 78vw, 300px);
+  }
+
+  .dialogContent {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .dialogImageFrame {
+    margin-bottom: 0;
+  }
+
+  .dialogDetails {
+    border-top: 1px solid var(--border);
+    border-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee {
+    overflow-x: auto;
+    overscroll-behavior-inline: contain;
+    scroll-snap-type: inline proximity;
+    scrollbar-width: thin;
+  }
+
+  .track {
+    animation: none !important;
+    transform: none !important;
+    will-change: auto;
+  }
+
+  .duplicateGroup {
+    display: none;
+  }
+
+  .cardItem {
+    scroll-snap-align: center;
+  }
+
+  .card,
+  .cardItem,
+  .imageFrame,
+  .openCertificate svg {
+    transition: none;
+  }
+
+  .card:hover,
+  .card:focus-visible {
+    transform: none;
+  }
+}

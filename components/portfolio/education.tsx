@@ -1,37 +1,96 @@
-import { GraduationCap } from "lucide-react"
+import { GraduationCap, Landmark } from "lucide-react"
+
+const education = [
+  {
+    chapter: "Undergraduate",
+    institution: "University of Mindanao",
+    degree: "Bachelor of Science in Information Technology",
+    date: "Graduated August 2025",
+    status: "Magna Cum Laude",
+    Icon: GraduationCap,
+  },
+  {
+    chapter: "Graduate studies",
+    institution: "Ateneo de Davao University",
+    degree: "Master in Information Technology",
+    status: "Currently pursuing",
+    Icon: Landmark,
+  },
+] as const
 
 export function Education() {
   return (
-    <section id="education" className="section-frame story-section bg-background" aria-labelledby="education-heading">
+    <section
+      id="education"
+      className="page-container story-section bg-background"
+      aria-labelledby="education-heading"
+    >
       <header className="story-header">
-        <p className="story-kicker">THE FOUNDATION</p>
-        <h2 id="education-heading" className="story-title">EDUCATION</h2>
-        <p className="story-summary">Where the foundation for a life in technology and teaching began.</p>
+        <p className="story-kicker">A CONTINUING JOURNEY</p>
+        <h2 id="education-heading" className="story-title">
+          EDUCATION
+        </h2>
+        <p className="story-summary">
+          Building on the foundation. Continuing to learn.
+        </p>
       </header>
-      <div className="mx-auto max-w-4xl border-l border-border pl-5 sm:pl-8">
-      <article className="story-reveal flex flex-wrap items-start justify-between gap-6 border border-border bg-card p-6 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)]">
-        <div className="flex items-start gap-4">
-          <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"><GraduationCap className="size-6" /></span>
-          <div>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">University of Mindanao</p>
-            <h3 className="mt-1 text-2xl font-medium tracking-[-0.04em]">Bachelor of Science in Information Technology</h3>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">Graduated August 2025</p>
-          </div>
-        </div>
-        <span className="rounded-full border border-emerald-600/35 bg-emerald-50 px-3 py-1.5 text-[11px] font-medium text-emerald-800 dark:border-emerald-400/35 dark:bg-emerald-400/10 dark:text-emerald-300">Magna Cum Laude</span>
-      </article>
-      <article className="story-reveal mt-4 flex flex-wrap items-start justify-between gap-6 border border-border bg-card p-6 shadow-[0_8px_18px_rgba(0,0,0,0.035)] dark:shadow-[0_8px_18px_rgba(0,0,0,0.25)]">
-        <div className="flex items-start gap-4">
-          <span className="inline-flex size-12 shrink-0 items-center justify-center rounded-full bg-zinc-950 text-white dark:bg-zinc-100 dark:text-zinc-950"><GraduationCap className="size-6" /></span>
-          <div>
-            <p className="text-sm text-zinc-500 dark:text-zinc-400">Graduate Studies</p>
-            <h3 className="mt-1 text-2xl font-medium tracking-[-0.04em]">Master in Information Technology</h3>
-            <p className="mt-2 text-sm text-zinc-600 dark:text-zinc-300">Present</p>
-          </div>
-        </div>
-        <span className="rounded-full border border-sky-600/35 bg-sky-50 px-3 py-1.5 text-[11px] font-medium text-sky-800 dark:border-sky-400/35 dark:bg-sky-400/10 dark:text-sky-300">Ongoing</span>
-      </article>
-      </div>
+      <ol className="education-journey">
+        {education.map((entry, index) => {
+          const Icon = entry.Icon
+
+          return (
+            <li key={entry.institution}>
+              <article className="education-entry story-reveal">
+                <div className="education-track" aria-hidden="true">
+                  <span
+                    className="education-track-line"
+                    data-hidden={index === 0}
+                  />
+                  <span
+                    className={`education-marker inline-flex size-12 shrink-0 items-center justify-center rounded-full border text-foreground ${index === education.length - 1 ? "border-accent bg-accent/10 text-accent-readable" : "border-border bg-card"}`}
+                  >
+                    <Icon className="size-6" />
+                  </span>
+                  <span
+                    className="education-track-line"
+                    data-hidden={index === education.length - 1}
+                  />
+                </div>
+
+                <div className="education-content">
+                  <div className="min-w-0">
+                    <p className="story-kicker">{entry.chapter}</p>
+                    <h3 className="mt-3 max-w-[28ch] text-[clamp(1.25rem,2vw,1.75rem)] leading-snug font-medium tracking-[-.04em]">
+                      {entry.institution}
+                    </h3>
+                    {"date" in entry && (
+                      <p className="mt-3 text-sm text-muted-foreground">
+                        {entry.date}
+                      </p>
+                    )}
+                  </div>
+                  <div className="education-degree min-w-0">
+                    <p className="max-w-[36ch] text-[clamp(1.25rem,2vw,1.75rem)] leading-snug font-medium tracking-[-.04em]">
+                      {entry.degree}
+                    </p>
+                    <span
+                      className={`mt-4 inline-flex items-center gap-2 rounded-full border bg-card px-3 py-2 text-xs font-medium ${index === education.length - 1 ? "border-accent text-accent-readable" : "border-border"}`}
+                    >
+                      {index === education.length - 1 && (
+                        <span
+                          aria-hidden="true"
+                          className="size-1.5 rounded-full bg-accent"
+                        />
+                      )}
+                      {entry.status}
+                    </span>
+                  </div>
+                </div>
+              </article>
+            </li>
+          )
+        })}
+      </ol>
     </section>
   )
 }

@@ -1,4 +1,8 @@
 .project-story-dialog {
+  --story-travel: 12px;
+  --graphic-drift: -4px;
+  --graphic-message-travel: 20px;
+  --graphic-scope-travel: 35px;
   position: fixed;
   inset: 0;
   margin: auto;
@@ -31,6 +35,7 @@
   flex: 1;
   min-height: 0;
   overflow-y: auto;
+  overflow-x: hidden;
   overscroll-behavior: contain;
 }
 .story-scene {
@@ -64,13 +69,15 @@
 .story-supporting {
   max-width: 32ch;
   margin-top: 24px;
-  font-size: clamp(13px, 1.1vw, 16px);
+  font-size: clamp(14px, 1.1vw, 16px);
   line-height: 1.7;
   color: var(--muted-foreground);
 }
 .story-control {
   display: inline-flex;
   min-height: 44px;
+  min-width: 44px;
+  justify-content: center;
   align-items: center;
   gap: 8px;
   padding: 8px;
@@ -87,7 +94,7 @@
   cursor: default;
 }
 .story-control:focus-visible {
-  outline: 2px solid var(--foreground);
+  outline: 2px solid var(--ring);
   outline-offset: 3px;
 }
 .story-object {
@@ -102,9 +109,11 @@
 .story-graphic > svg {
   display: block;
   width: 100%;
+  height: auto;
   max-height: 65dvh;
   overflow: visible;
 }
+.story-image { padding-inline: clamp(12px, 1.5vw, 24px); }
 .graphic-label {
   font-family: inherit;
   font-size: 12px;
@@ -214,7 +223,7 @@
 @keyframes story-open {
   from {
     opacity: 0;
-    transform: translateY(12px) scale(0.985);
+    transform: translateY(var(--story-travel)) scale(0.985);
   }
   to {
     opacity: 1;
@@ -232,7 +241,7 @@
 @keyframes story-line {
   from {
     opacity: 0;
-    transform: translateY(12px);
+    transform: translateY(var(--story-travel));
   }
   to {
     opacity: 1;
@@ -399,7 +408,7 @@
     translate: 0 0;
   }
   50% {
-    translate: 0 -4px;
+    translate: 0 var(--graphic-drift);
   }
 }
 @keyframes graphic-link-pulse {
@@ -418,7 +427,7 @@
     opacity: 1;
   }
   50% {
-    translate: 0 20px;
+    translate: 0 var(--graphic-message-travel);
     opacity: 0.4;
   }
 }
@@ -429,7 +438,7 @@
     opacity: 0.9;
   }
   50% {
-    translate: 0 35px;
+    translate: 0 var(--graphic-scope-travel);
     opacity: 0.25;
   }
 }
@@ -453,7 +462,7 @@
   35%,
   80% {
     opacity: 0.08;
-    translate: 20px 0;
+    translate: var(--graphic-message-travel) 0;
   }
 }
 @keyframes graphic-tangle-loop {
@@ -464,6 +473,23 @@
   50% {
     opacity: 0.08;
   }
+}
+@media (max-width: 1023px) {
+  .project-story-dialog {
+    --story-travel: 6px;
+    --graphic-drift: -2px;
+    --graphic-message-travel: 10px;
+    --graphic-scope-travel: 18px;
+  }
+  .story-scene {
+    grid-template-columns: minmax(0, 1fr);
+    align-content: start;
+    gap: 24px;
+    padding: clamp(16px, 4vw, 32px);
+  }
+  .story-graphic, .story-image { max-width: 440px; margin-inline: auto; }
+  .story-graphic > svg { max-height: none; }
+  .story-preview-frame { transform: none; }
 }
 @media (max-width: 767px) {
   .project-story-dialog {
@@ -476,7 +502,7 @@
     grid-template-columns: minmax(0, 1fr);
     align-content: start;
     gap: 20px;
-    padding: 28px 24px;
+    padding: 24px 16px;
   }
   .story-heading {
     font-size: clamp(28px, 7.5vw, 44px);
@@ -496,6 +522,13 @@
   .story-control {
     font-size: 12px;
   }
+}
+.story-dialog-header { padding-top: max(12px, env(safe-area-inset-top)); }
+.story-dialog-footer { padding-bottom: max(12px, env(safe-area-inset-bottom)); }
+@media (max-height: 500px) {
+  .project-story-dialog { height: 100dvh; }
+  .story-dialog-header, .story-dialog-footer { padding-block: 4px; }
+  .story-scene { min-height: auto; }
 }
 @media (prefers-reduced-motion: reduce) {
   .story-motion-control {

@@ -74,7 +74,7 @@ export function ContactForm() {
             autoComplete: field.autoComplete,
             "aria-invalid": !!errors[field.name],
             "aria-describedby": errors[field.name] ? `contact-${field.name}-error` : undefined,
-            className: "mt-2 block w-full min-w-0 rounded-lg border border-input bg-card px-4 py-3 text-base text-foreground outline-none transition-colors focus-visible:border-foreground focus-visible:ring-2 focus-visible:ring-ring/40",
+            className: "mt-2 block w-full min-w-0 rounded-lg border border-input bg-card px-4 py-3 text-base text-foreground outline-none transition-[background-color,color,border-color,box-shadow] focus-visible:border-accent focus-visible:ring-2 focus-visible:ring-ring/40",
           }
           return (
             <div key={field.name}>
@@ -90,7 +90,7 @@ export function ContactForm() {
           <label htmlFor="contact-website">Leave this field empty</label>
           <input id="contact-website" name="website" type="text" tabIndex={-1} autoComplete="off" />
         </div>
-        <button type="submit" disabled={status === "sending"} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-opacity hover:opacity-80 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-foreground disabled:cursor-wait sm:w-fit">
+        <button type="submit" disabled={status === "sending"} className="inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-lg bg-primary px-6 py-3 text-sm font-medium text-primary-foreground transition-[background-color,opacity] hover:bg-accent-hover focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ring disabled:cursor-wait disabled:opacity-70 sm:w-fit">
           {status === "sending" ? <>Sending...<LoaderCircle aria-hidden="true" className="size-4 animate-spin" /></> : <>Send Message<ArrowUpRight aria-hidden="true" className="size-4" /></>}
         </button>
       </fieldset>

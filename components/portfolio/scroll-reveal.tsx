@@ -21,7 +21,8 @@ export function ScrollReveal({ children, delay = 0 }: ScrollRevealProps) {
         element.classList.add("is-visible")
         observer.unobserve(element)
       },
-      { rootMargin: "0px 0px -9% 0px", threshold: 0.08 },
+      // Tall sections must still reveal in short landscape viewports.
+      { rootMargin: "0px 0px -24px 0px", threshold: 0 },
     )
 
     observer.observe(element)

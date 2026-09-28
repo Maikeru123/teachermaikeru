@@ -18,10 +18,19 @@ export function ThemeToggle() {
     <button
       type="button"
       aria-label={isDark ? "Switch to light mode" : "Switch to dark mode"}
-      className="inline-flex size-10 items-center justify-center rounded-full bg-zinc-950 text-white shadow-[0_5px_10px_rgba(0,0,0,0.18)] transition-transform hover:-translate-y-0.5 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-zinc-950 dark:bg-zinc-100 dark:text-zinc-950 dark:focus-visible:outline-zinc-100"
+      className="relative inline-flex size-11 items-center justify-center rounded-full border border-border bg-card text-foreground shadow-[0_5px_10px_rgba(0,0,0,0.18)] transition-[background-color,color,border-color,box-shadow,opacity,transform] hover:-translate-y-0.5 hover:border-accent hover:text-accent-hover focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ring"
       onClick={() => setTheme(isDark ? "light" : "dark")}
     >
-      {isDark ? <Sun className="size-4" strokeWidth={1.8} /> : <Moon className="size-4" strokeWidth={1.8} />}
+      <Moon
+        aria-hidden="true"
+        className="absolute size-4 scale-100 opacity-100 transition-[opacity,transform] duration-300 ease-out dark:scale-75 dark:opacity-0 motion-reduce:transition-none"
+        strokeWidth={1.8}
+      />
+      <Sun
+        aria-hidden="true"
+        className="absolute size-4 scale-75 opacity-0 transition-[opacity,transform] duration-300 ease-out dark:scale-100 dark:opacity-100 motion-reduce:transition-none"
+        strokeWidth={1.8}
+      />
     </button>
   )
 }

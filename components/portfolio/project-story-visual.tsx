@@ -534,7 +534,7 @@ export function ProjectStoryVisual({
                 src={project.image}
                 alt={`${project.title} project preview`}
                 fill
-                sizes="(max-width: 767px) 90vw, 48vw"
+                sizes="(max-width: 1023px) min(440px, 90vw), (max-width: 1739px) 48vw, 810px"
                 className="object-contain"
               />
             </div>
